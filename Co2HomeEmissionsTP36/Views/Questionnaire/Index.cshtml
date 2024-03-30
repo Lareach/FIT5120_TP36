@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Questionnaire";
+}
+
+<form asp-action="Results">
+    <div class="form-group">
+        <div>What utility bill do you usually pay?</div>
+        <input type="checkbox" name="utilityBill" id="electricityBill" value="Electricity bill">
+        <label for="electricityBill">Electricity bill</label><br/>
+        <input type="checkbox" name="utilityBill" id="waterBill" value="Water bill">
+        <label for="waterBill">Water bill</label><br/>
+        <input type="checkbox" name="utilityBill" id="gasBill" value="Gas bill">
+        <label for="gasBill">Gas bill</label><br/>
+        <input type="checkbox" name="utilityBill" id="noneOfTheAbove" value="None of the above">
+        <label for="noneOfTheAbove">None of the above</label>
+    </div>
+    <div class="form-group">
+        <br/><div>Do you own the property where you reside?</div>
+        <input type="radio" id="propertyYes" name="propertyOwnership" value="Yes">
+        <label for="propertyYes">Yes</label><br/>
+        <input type="radio" id="propertyNo" name="propertyOwnership" value="No">
+        <label for="propertyNo">No</label>
+    </div>
+    <div class="form-group">
+        <br/><div>What is your combined household taxable income per year?</div>
+        <input type="radio" id="lessThan" name="householdIncome" value="No">
+        <label for="lessThan">Less than $180,000</label><br/>
+        <input type="radio" id="moreThan" name="householdIncome" value="Yes">
+        <label for="moreThan">$180,000 or more</label>
+    </div>
+    <div class="form-group">
+        <br/><div>Do you have one of the following concession cards?</div>
+        <input type="checkbox" id="pensionerCard" name="concessionCards" value="Pensioner Concession Card">
+        <label for="pensionerCard">Pensioner Concession Card</label><br/>
+        <input type="checkbox" id="healthCareCard" name="concessionCards" value="Health Care Card">
+        <label for="healthCareCard">Health Care Card</label><br/>
+        <input type="checkbox" id="veteransCard" name="concessionCards" value="Veterans' Affairs Gold Card">
+        <label for="veteransCard">Veterans' Affairs Gold Card</label><br/>
+        <input type="checkbox" id="noneOfTheAboveConcession" name="concessionCards" value="None of the above">
+        <label for="noneOfTheAboveConcession">None of the above</label><br/>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
