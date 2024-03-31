@@ -1,3 +1,27 @@
 @{
     ViewData["Title"] = "Questionnaire Result";
 }
+
+@model List<Savings>
+
+<h1>Savings List</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Savings ID</th>
+        <th>Title</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var saving in Model)
+    {
+        <tr>
+            <td>@saving.Title</td>
+            <td>@saving.Description</td>
+            
+        </tr>
+    }
+    </tbody>
+</table>
