@@ -49,21 +49,22 @@ public class QuestionnaireController : Controller
     private async Task RefreshSavingsData(string contents)
     {
         JsonDocument doc = JsonDocument.Parse(contents);
-
+            
         if (doc.RootElement.TryGetProperty("data", out JsonElement dataArray))
         {
-            var categoryIdList = await _context.category.Select(c => c.CategoryId).ToListAsync();
-            var concessionIdList = await _context.concession.Select(c => c.ConcessionId).ToListAsync();
-            var savingsIdList = await _context.savings.Select(c => c.SavingsId).ToListAsync();
-
             foreach (JsonElement item in dataArray.EnumerateArray())
             {
+                var categoryIdList = await _context.category.Select(c => c.CategoryId).ToListAsync();
+                var concessionIdList = await _context.concession.Select(c => c.ConcessionId).ToListAsync();
+                var savingsIdList = await _context.savings.Select(c => c.SavingsId).ToListAsync();
+                
                 int categoryId = item.GetProperty("category_id").GetInt32();
                 string? categoryName = item.GetProperty("category_name").GetString();
-
+                
                 if (!categoryIdList.Contains(categoryId))
                 {
-                    _context.Add(new SavingsCategory() { CategoryId = categoryId, CategoryName = categoryName });
+                    _context.Add(new SavingsCategory()
+                        { CategoryId = categoryId, CategoryName = categoryName });
                     await _context.SaveChangesAsync();
                 }
 
@@ -72,19 +73,22 @@ public class QuestionnaireController : Controller
 
                 if (concessionIds != null && concessionNames != null)
                 {
-                    List<int> concessionId = concessionIds.Split(',').Select(int.Parse).ToList();
-                    List<string> concessionName = concessionNames.Split(',').Select(x => x.Trim()).ToList();
+                    List<int> concessionId = concessionIds.Split(',')
+                        .Select(int.Parse).ToList();
+                    List<string> concessionName = concessionNames.Split(',')
+                        .Select(x => x.Trim()).ToList();
 
-                    for (int i = 0; i < concessionId.Count; i++)
+                    for (int i=0; i<concessionId.Count; i++)
                     {
                         if (!concessionIdList.Contains(concessionId[i]))
                         {
-                            _context.Add(new Concession() { ConcessionId = concessionId[i], ConcessionName = concessionName[i] });
+                            _context.Add(new Concession()
+                                { ConcessionId = concessionId[i], ConcessionName = concessionName[i] });
                             await _context.SaveChangesAsync();
                         }
                     }
                 }
-
+                
                 int savingsId = item.GetProperty("savings_id").GetInt32();
                 string? title = item.GetProperty("title").GetString();
                 string? description = item.GetProperty("description").GetString();
@@ -97,31 +101,30 @@ public class QuestionnaireController : Controller
                 {
                     _context.Add(new Savings()
                     {
-                        SavingsId = savingsId,
-                        Title = title,
-                        Description = description,
-                        Method = method,
-                        Duration = duration,
-                        EligibilityRequirements = eligibilityRequirements,
-                        CtaUrl = ctaUrl,
-                        CategoryId = categoryId
+                        SavingsId = savingsId, Title = title,
+                        Description = description, Method = method,
+                        Duration = duration, EligibilityRequirements = eligibilityRequirements,
+                        CtaUrl = ctaUrl, CategoryId=categoryId
                     });
                     await _context.SaveChangesAsync();
                 }
 
                 if (concessionIds != null)
                 {
-                    List<int> concessionId = concessionIds.Split(',').Select(int.Parse).ToList();
+                    List<int> concessionId = concessionIds.Split(',')
+                        .Select(int.Parse).ToList();
 
                     foreach (int id in concessionId)
                     {
-                        concessionIdList = await _context.concession.Select(c => c.ConcessionId).ToListAsync();
-                        savingsIdList = await _context.savings.Select(c => c.SavingsId).ToListAsync();
-
-                        if (savingsIdList.Contains(savingsId) && concessionIdList.Contains(id))
+                        try
                         {
-                            _context.Add(new SavingsConcession() { SavingsId = savingsId, ConcessionId = id });
+                            _context.Add(new SavingsConcession()
+                                { SavingsId = savingsId, ConcessionId = id });
                             await _context.SaveChangesAsync();
+                        }
+                        catch (DbUpdateException ex)
+                        {
+
                         }
                     }
                 }
