@@ -84,7 +84,7 @@ namespace Co2HomeEmissionsTP36.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Savings");
+                    b.ToTable("savings");
                 });
 
             modelBuilder.Entity("Co2HomeEmissionsTP36.Models.SavingsCategory", b =>
@@ -125,7 +125,7 @@ namespace Co2HomeEmissionsTP36.Migrations
 
                     b.HasIndex("ConcessionId");
 
-                    b.ToTable("SavingsConcession");
+                    b.ToTable("savingsConcession");
                 });
 
             modelBuilder.Entity("Co2HomeEmissionsTP36.Models.Savings", b =>

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Co2HomeEmissionsTP36.Migrations
 {
     [DbContext(typeof(SavingsContext))]
-    [Migration("20240331024706_InitialCreate")]
+    [Migration("20240331074908_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -87,7 +87,7 @@ namespace Co2HomeEmissionsTP36.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Savings");
+                    b.ToTable("savings");
                 });
 
             modelBuilder.Entity("Co2HomeEmissionsTP36.Models.SavingsCategory", b =>
@@ -128,7 +128,7 @@ namespace Co2HomeEmissionsTP36.Migrations
 
                     b.HasIndex("ConcessionId");
 
-                    b.ToTable("SavingsConcession");
+                    b.ToTable("savingsConcession");
                 });
 
             modelBuilder.Entity("Co2HomeEmissionsTP36.Models.Savings", b =>

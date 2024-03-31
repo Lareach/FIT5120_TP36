@@ -12,6 +12,6 @@ public class SavingsConcession
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int ConcessionId { get; set; }
     
-    public Savings Savings { get; set; }
-    public Concession Concession { get; set; }
+    public Savings? Savings { get; set; }
+    public Concession? Concession { get; set; }
 }

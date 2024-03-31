@@ -39,7 +39,7 @@ namespace Co2HomeEmissionsTP36.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Savings",
+                name: "savings",
                 columns: table => new
                 {
                     SavingsId = table.Column<int>(type: "int", nullable: false),
@@ -55,16 +55,16 @@ namespace Co2HomeEmissionsTP36.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Savings", x => x.SavingsId);
+                    table.PrimaryKey("PK_savings", x => x.SavingsId);
                     table.ForeignKey(
-                        name: "FK_Savings_category_CategoryId",
+                        name: "FK_savings_category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "category",
                         principalColumn: "CategoryId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "SavingsConcession",
+                name: "savingsConcession",
                 columns: table => new
                 {
                     SavingsId = table.Column<int>(type: "int", nullable: false),
@@ -74,29 +74,29 @@ namespace Co2HomeEmissionsTP36.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SavingsConcession", x => new { x.SavingsId, x.ConcessionId });
+                    table.PrimaryKey("PK_savingsConcession", x => new { x.SavingsId, x.ConcessionId });
                     table.ForeignKey(
-                        name: "FK_SavingsConcession_Savings_SavingsId",
-                        column: x => x.SavingsId,
-                        principalTable: "Savings",
-                        principalColumn: "SavingsId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SavingsConcession_concession_ConcessionId",
+                        name: "FK_savingsConcession_concession_ConcessionId",
                         column: x => x.ConcessionId,
                         principalTable: "concession",
                         principalColumn: "ConcessionId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_savingsConcession_savings_SavingsId",
+                        column: x => x.SavingsId,
+                        principalTable: "savings",
+                        principalColumn: "SavingsId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Savings_CategoryId",
-                table: "Savings",
+                name: "IX_savings_CategoryId",
+                table: "savings",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SavingsConcession_ConcessionId",
-                table: "SavingsConcession",
+                name: "IX_savingsConcession_ConcessionId",
+                table: "savingsConcession",
                 column: "ConcessionId");
         }
 
@@ -104,13 +104,13 @@ namespace Co2HomeEmissionsTP36.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SavingsConcession");
-
-            migrationBuilder.DropTable(
-                name: "Savings");
+                name: "savingsConcession");
 
             migrationBuilder.DropTable(
                 name: "concession");
+
+            migrationBuilder.DropTable(
+                name: "savings");
 
             migrationBuilder.DropTable(
                 name: "category");
