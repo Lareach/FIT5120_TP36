@@ -22,15 +22,12 @@ public class Savings
     [StringLength(50)]
     public string? Duration { get; set; }
     
-    [StringLength(600)]
+    [StringLength(1000)]
     public string? EligibilityRequirements { get; set; }
     
     [StringLength(255)]
     public string? CtaUrl { get; set; }
     
-    public int CategoryId { get; set; }
-    public int ConcessionId { get; set; }
-
+    public int? CategoryId { get; set; }
     public SavingsCategory? Category { get; set; }
-    public Concession? Concession { get; set; }
 }
