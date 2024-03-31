@@ -39,7 +39,7 @@ namespace Co2HomeEmissionsTP36.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "savings",
+                name: "Savings",
                 columns: table => new
                 {
                     SavingsId = table.Column<int>(type: "int", nullable: false),
@@ -49,22 +49,40 @@ namespace Co2HomeEmissionsTP36.Migrations
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Method = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Duration = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EligibilityRequirements = table.Column<string>(type: "nvarchar(600)", maxLength: 600, nullable: true),
+                    EligibilityRequirements = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     CtaUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ConcessionId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_savings", x => x.SavingsId);
+                    table.PrimaryKey("PK_Savings", x => x.SavingsId);
                     table.ForeignKey(
-                        name: "FK_savings_category_CategoryId",
+                        name: "FK_Savings_category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "category",
-                        principalColumn: "CategoryId",
+                        principalColumn: "CategoryId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SavingsConcession",
+                columns: table => new
+                {
+                    SavingsId = table.Column<int>(type: "int", nullable: false),
+                    ConcessionId = table.Column<int>(type: "int", nullable: false),
+                    Uid = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SavingsConcession", x => new { x.SavingsId, x.ConcessionId });
+                    table.ForeignKey(
+                        name: "FK_SavingsConcession_Savings_SavingsId",
+                        column: x => x.SavingsId,
+                        principalTable: "Savings",
+                        principalColumn: "SavingsId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_savings_concession_ConcessionId",
+                        name: "FK_SavingsConcession_concession_ConcessionId",
                         column: x => x.ConcessionId,
                         principalTable: "concession",
                         principalColumn: "ConcessionId",
@@ -72,13 +90,13 @@ namespace Co2HomeEmissionsTP36.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_savings_CategoryId",
-                table: "savings",
+                name: "IX_Savings_CategoryId",
+                table: "Savings",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_savings_ConcessionId",
-                table: "savings",
+                name: "IX_SavingsConcession_ConcessionId",
+                table: "SavingsConcession",
                 column: "ConcessionId");
         }
 
@@ -86,13 +104,16 @@ namespace Co2HomeEmissionsTP36.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "savings");
+                name: "SavingsConcession");
 
             migrationBuilder.DropTable(
-                name: "category");
+                name: "Savings");
 
             migrationBuilder.DropTable(
                 name: "concession");
+
+            migrationBuilder.DropTable(
+                name: "category");
         }
     }
 }
