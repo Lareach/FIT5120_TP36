@@ -34,8 +34,40 @@ public class QuestionnaireController : Controller
             // checks the savings data for new records and updates database
             await RefreshSavingsData(contents);
         }
+
+        var utilityBills = Request.Form["utilityBill"].ToList();
+        var propertyOwnership = Request.Form["propertyOwnership"].ToString();
+        var householdIncome = Request.Form["householdIncome"].ToString();
+        var concessionCards = Request.Form["concessionCards"].ToList();
+
+        var query = """
+                        SELECT DISTINCT s.*
+                        FROM Savings s
+                        INNER JOIN Category ca ON s.CategoryId = ca.CategoryId
+                        LEFT JOIN SavingsConcession sc ON s.SavingsId = sc.SavingsId
+                        LEFT JOIN Concession c ON sc.ConcessionId = c.ConcessionId
+                        WHERE ca.CategoryName = 'Energy and utilities'
+                    """;
         
-        return View();
+        if (!utilityBills.Contains("None of the above") && !concessionCards.Contains("None of the above"))
+        { 
+            query += $" and c.ConcessionName in ('{string.Join("', '", utilityBills)}')";
+            
+            if (propertyOwnership.Equals("yes") && householdIncome.Equals("no"))
+            {
+                query += " or s.SavingsId = 29";
+            }
+        }
+        else
+        {
+            query += " and sc.ConcessionId is null";
+        }
+
+        var savings = _context.savings
+            .FromSqlRaw(query)
+            .ToList();
+        
+        return View(savings);
     }
 
     private static async Task<HttpResponseMessage> GetSavingsData()
