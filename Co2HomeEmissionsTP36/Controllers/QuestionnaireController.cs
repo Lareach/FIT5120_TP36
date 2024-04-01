@@ -158,7 +158,7 @@ public class QuestionnaireController : Controller
                             }
                             catch (DbUpdateException ex)
                             {
-
+                                Console.WriteLine(ex);
                             }
                         }
                     }

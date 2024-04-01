@@ -14,7 +14,7 @@ public class SavingsContext : DbContext
     public DbSet<Concession> concession { get; set; }
     public DbSet<Savings> savings { get; set; }
     
-    public DbSet<SavingsConcession> savingsConcession { get; }
+    public DbSet<SavingsConcession>? savingsConcession { get; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
