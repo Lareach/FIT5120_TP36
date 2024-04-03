@@ -15,7 +15,8 @@ public class IntegrationTests
         // Get connection strings from the main asp.net project
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
-            .AddJsonFile("appsettings.Development.json", optional: true)
+            /* Uncomment when testing locally */
+            //.AddJsonFile("appsettings.Development.json", optional: true)
             .Build();
         
         var services = new ServiceCollection()
@@ -44,7 +45,7 @@ public class IntegrationTests
         /* Insert Data Into Database */
         var newData = new Savings
         {
-            SavingsId = 0
+            SavingsId = 1
         };
         
         _context.savings.Add(newData);
