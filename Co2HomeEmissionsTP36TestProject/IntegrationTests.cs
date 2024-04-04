@@ -1,5 +1,6 @@
 using Co2HomeEmissionsTP36.Models;
 using Co2HomeEmissionsTP36.Data;
+using Co2HomeEmissionsTP36.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ namespace Co2HomeEmissionsTP36TestProject;
 public class IntegrationTests
 {
     private readonly SavingsContext _context;
+    private readonly QuestionnaireController _controller;
     
     public IntegrationTests()
     {
@@ -26,6 +28,7 @@ public class IntegrationTests
             .BuildServiceProvider();
         
         _context = services.CreateScope().ServiceProvider.GetRequiredService<SavingsContext>();
+        _controller = new QuestionnaireController(_context);
     }
     
     [Fact]
@@ -62,5 +65,19 @@ public class IntegrationTests
         // Query the database to check if data was deleted
         var deletedData = _context.savings.FirstOrDefault(s => s.SavingsId == 1);
         Assert.Null(deletedData); // Assert that the deleted data does not exist in the database
+    }
+
+    [Fact]
+    public void QuizResults()
+    {
+        List<string?> utilityList = ["Electricity bill"];
+        string hasProperty = "yes";
+        string highIncome = "no";
+        List<string?> concessionCards = ["Pensioner Concession Card"];
+        
+        var result = _controller.InferBenefits(utilityList, hasProperty, highIncome, concessionCards);
+        
+        Assert.NotEmpty(result);
+        Assert.Contains(result, savings => savings.SavingsId == 29);
     }
 }
