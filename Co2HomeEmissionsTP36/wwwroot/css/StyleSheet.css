@@ -23,6 +23,11 @@ header {
     width: 100%;
 }
 
+footer {
+    position: relative !important;
+    max-height: 60px;
+}
+
 /* Center the title and give it some padding */
 .navbar-brand {
     text-align: center;
