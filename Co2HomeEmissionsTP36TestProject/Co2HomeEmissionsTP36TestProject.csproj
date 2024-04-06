@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Co2HomeEmissionsTP36\Co2HomeEmissionsTP36.csproj" />
+        <ProjectReference Include="..\Co2HomeEmissionsTP36\Co2HomeEmissionsTP36.csproj" />
     </ItemGroup>
 
 </Project>

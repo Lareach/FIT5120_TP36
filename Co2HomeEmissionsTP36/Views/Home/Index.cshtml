@@ -1,8 +1,122 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Homepage Banner -->
+<div>
+    <div class="banner">
+        <div>
+            <p>SHOWCASING INNOVATIVE</p>
+            <p>AUSTRALIAN APPROACHES TO</p>
+            <p>CARBON EMISSIONS</p>
+            <p>REDUCTION</p>
+
+            <a asp-controller="Home" asp-action="ClimateAction" class="btn btn-outline-dark-big">CLIMATE ACTION »</a>
+        </div>
+    </div>
+</div>
+
+<!-- Short Message -->
+<div class="website-text" style="margin:auto; max-width:500px;text-align:center;">
+    <br />
+    <h1>We’re thinking globally, acting locally</h1>
+</div>
+
+<!-- stats block -->
+<section class="pt-4 pb-5" id="stats">
+    <div class="container pb-md-5 pb-4">
+
+        <div class="row text-center pt-4">
+            <div class="col-md-3 col-6">
+                <div class="counter">
+                    <img src="~/assets/images/icon-1.png" alt="" class="img-fluid">
+                    <div class="timer count-title count-number mt-sm-1" data-to="36076" data-speed="1500"></div>
+                    <p>Statistic 1</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="counter">
+                    <img src="~/assets/images/icon-2.png" alt="" class="img-fluid">
+                    <div class="timer count-title count-number mt-3" data-to="786" data-speed="1500"></div>
+                    <p>Statistic 2</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mt-md-0 mt-5">
+                <div class="counter">
+                    <img src="~/assets/images/icon-3.png" alt="" class="img-fluid">
+                    <div class="timer count-title count-number mt-3" data-to="3630" data-speed="1500"></div>
+                    <p>Statistic 3</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mt-md-0 mt-5">
+                <div class="counter">
+                    <img src="~/assets/images/icon-4.png" alt="" class="img-fluid">
+                    <div class="timer count-title count-number mt-3" data-to="6300" data-speed="1500"></div>
+                    <p>Statistic 4</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Cards -->
+<div class="home-feature-bg" id="features">
+    <div class="container">
+
+        <div class="website-text">
+            <h2>We’re thinking globally, acting locally</h2>
+            <h4>subtitle</h4>
+        </div>
+
+        <div class="row">
+            <!-- First feature Card -->
+            <div class="col-md-6 feature-card">
+                <img src="https://images.pexels.com/photos/4359064/pexels-photo-4359064.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Gov Support" class="img-fluid" />
+                <div class="website-text" style="padding-left:10%; padding-right:5%; padding-top:1.5%;">
+                    <h4>Governmental Support</h4>
+                    <ul>
+                        <li><a asp-area="" asp-controller="Home" asp-action="GovernmentalSupport">Current Funding Opportunities</a></li>
+                        <li><a asp-area="" asp-controller="Questionnaire" asp-action="Index">Self-assessment on the Government's Grants Questionnaire</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Second feature Card -->
+            <div class="col-md-6 feature-card">
+                <img src="https://images.pexels.com/photos/46169/twilight-power-lines-evening-evening-sun-46169.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Solar" class="img-fluid" />
+                <div class="website-text" style="padding-left:10%; padding-right:5%; padding-top:1.5%;">
+                    <h4>Solar Energy</h4>
+                    <ul>
+                        <li>Energy Improvement Programs</li>
+                        <li>Solar Installer Near You</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Third feature Card -->
+            <div class="col-md-6 feature-card">
+                <img src="https://images.pexels.com/photos/923306/pexels-photo-923306.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Solar" class="img-fluid" />
+                <div class="website-text" style="padding-left:10%; padding-right:5%; padding-top:1.5%;">
+                    <h4>Efficient Design</h4>
+                    <ul>
+                        <li>Efficient Design</li>
+                        <li>Autumn and Winter Energy-Saving Tips</li>
+                        <li>Energy Efficient House Tour</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Fourth feature Card -->
+            <div class="col-md-6 feature-card">
+                <img src="https://images.pexels.com/photos/10467999/pexels-photo-10467999.jpeg" alt="Solar" class="img-fluid" />
+                <div class="website-text" style="padding-left:10%; padding-right:5%; padding-top:1.5%;">
+                    <h4>Home Carbon Footprint</h4>
+                    <ul>
+                        <li>Carbon Calculator</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
