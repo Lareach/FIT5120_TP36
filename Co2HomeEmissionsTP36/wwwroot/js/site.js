@@ -1,5 +1,10 @@
 ﻿jQuery(document).ready(function($) {
+    showHideQuestionnaire();
+    clickAccordion();
+});
 
+function showHideQuestionnaire()
+{
     var currentQuestion = 1;
 
     // Initially disable the next button
@@ -27,7 +32,7 @@
         }
         // Disable next button if no option is selected
         $("#nextButton").prop("disabled", true);
-        
+
         if ($("#question" + currentQuestion).find(":input:checked").length > 0) {
             $("#nextButton").prop("disabled", false);
         }
@@ -50,4 +55,22 @@
 
         $("#nextButton").prop("disabled", false);
     });
-});
+}
+
+function clickAccordion()
+{
+    $.each($(".accordion-container"), function(i) {
+        $(this).addClass("_" + (i + 1));
+    });
+
+    let moduleCount = $(".accordion-container").length;
+
+    for(let j = 1; j <= moduleCount; j++) {
+        let currentModule = ".accordion-container._" + j + " ";
+
+        $(currentModule + '.questionnaire-accordion-head').click(function(e) {
+            $(currentModule + ".questionnaire-accordion-head-icon").toggleClass("accordion-no-rotate accordion-rotate");
+            $(currentModule + ".questionnaire-accordion-tail").toggleClass("accordion-open accordion-close");
+        });
+    }
+}

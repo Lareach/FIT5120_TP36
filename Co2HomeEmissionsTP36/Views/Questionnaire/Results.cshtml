@@ -4,30 +4,48 @@
 
 @model List<Savings>
 
-<h1>Savings List</h1>
+<h2 class="questionnaire-heading">Energy and Utilities Savings Results</h2>
 
-<table class="result-tb">
-    <thead class="result-thd">
-    <tr class="result-tr">
-        <th class="result-th">Title</th>
-        <th class="result-th">Description</th>
-        <th class="result-th">Method</th>
-        <th class="result-th">Duration</th>
-        <th class="result-th">Eligibility Requirements</th>
-        <th class="result-th">CtaUrl</th>
-    </tr>
-    </thead>
-    <tbody class="result-tbd">
+<div class="questionnaire-result-container">
     @foreach (var saving in Model)
     {
-        <tr class="result-tbd-tr">
-            <td class="result-td">@saving.Title</td>
-            <td class="result-td">@saving.Description</td>
-            <td class="result-td">@saving.Method</td>
-            <td class="result-td">@saving.Duration</td>
-            <td class="result-td">@saving.EligibilityRequirements</td>
-            <td class="result-td">@saving.CtaUrl</td>
-        </tr>
+        <div class="accordion-container">
+            <div class="questionnaire-accordion-head">
+                <div class="questionnaire-accordion-head-content">
+                    <div class="questionnaire-accordion-head-text">
+                        <h4>@saving.Title</h4>
+                        <p class="questionnaire-accordion-head-text-description">@saving.Description</p>
+                    </div>
+                    <div class="questionnaire-accordion-head-icon accordion-rotate"></div>
+                </div>
+            </div>
+            <div class="questionnaire-accordion-tail accordion-close">
+                <div class="questionnaire-accordion-tail-content">
+                    <div class="questionnaire-accordion-tail-content-top">
+                        <p><strong>Method: </strong>@saving.Method</p>
+                        <p><strong>Duration: </strong>@saving.Duration</p>
+                    </div>
+                    <div class="questionnaire-accordion-tail-content-bottom">
+                        <div class="questionnaire-accordion-tail-content-bottom-left">
+                            <strong>Eligibility requirements:</strong>
+                            <div>@Html.Raw(@saving.EligibilityRequirements)</div>
+                        </div>
+                        <div class="questionnaire-results-button-container">
+                            <a href=@saving.CtaUrl class="questionnaire-results-button" target="_blank">
+                                Learn more
+                                <svg class="questionnaire-results-button-icon" viewBox="0 0 18 18" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M3.75 3.75V14.25H14.25V9H15.75V14.25C15.75 15.075 15.075 15.75 14.25 
+                                        15.75H3.75C2.9175 15.75 2.25 15.075 2.25 14.25V3.75C2.25 2.925 2.9175 
+                                        2.25 3.75 2.25H9V3.75H3.75ZM10.5 3.75V2.25H15.75V7.5H14.25V4.8075L6.8775 
+                                        12.18L5.82 11.1225L13.1925 3.75H10.5Z" fill="white">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
-    </tbody>
-</table>
+</div>
