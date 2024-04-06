@@ -18,17 +18,38 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+footer {
+  position: relative !important;
+}
+
+.navbar.mb-3 {
+  margin-bottom: 0 !important;
+}
+
+.container {
+  flex: 1;
 }
 
 .questionnaire-form {
   text-align: center;
   color: #4a6f70;
+  margin-top: 90px;
+  margin-bottom: 30px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .questionnaire-form .form-item-title {
   font-size: 24px;
 }
+
 .questionnaire-form .form-item-desc {
   font-size: 20px;
 
@@ -39,17 +60,27 @@ body {
   text-align: left;
 }
 .questionnaire-form .btn-primary {
-  margin-top: 60px;
   background-color: #4C7070;
   border-radius: 16px;
   width: 240px;
   border: none;
 }
 
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-label-container {
+  display: flex;
+  gap: 10px;
+}
 
 .form-input {
   display: none;
 }
+
 .form-input-label {
   display: inline-block;
   width: 22px;
@@ -72,14 +103,13 @@ body {
   border-radius: 50%;
 }
 
-.form-input:checked+.form-input-label::before{
+.form-input:checked  + .form-label-container .form-input-label::before {
   opacity: 1;
   background-color: #4C7070;
 }
 
-
-.result-tb {
-
+.form-item-radio-body {
+  margin-top: 10px;
 }
 
 .result-thd {
@@ -100,4 +130,12 @@ body {
 
 .result-td {
   padding: 10px 20px;
+}
+
+.question {
+  display: none;
+}
+
+.questionnaire-form #question1{
+  display: block;
 }
