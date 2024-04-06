@@ -32,7 +32,12 @@ public class QuestionnaireController : Controller
         var propertyOwnership = Request.Form["propertyOwnership"].ToString();
         var householdIncome = Request.Form["householdIncome"].ToString();
         var concessionCards = Request.Form["concessionCards"].ToList();
+        
+        return View(InferBenefits(utilityBills, propertyOwnership, householdIncome, concessionCards));
+    }
 
+    public List<Savings> InferBenefits(List<string?> utility, string property, string income, List<string?> concession)
+    {
         var query = """
                         SELECT DISTINCT s.*
                         FROM Savings s
@@ -42,11 +47,11 @@ public class QuestionnaireController : Controller
                         WHERE ca.CategoryName = 'Energy and utilities'
                     """;
         
-        if (!utilityBills.Contains("None of the above") && !concessionCards.Contains("None of the above"))
+        if (!utility.Contains("None of the above") && !concession.Contains("None of the above"))
         { 
-            query += $" and c.ConcessionName in ('{string.Join("', '", utilityBills)}')";
+            query += $" and c.ConcessionName in ('{string.Join("', '", utility)}')";
             
-            if (propertyOwnership.Equals("yes") && householdIncome.Equals("no"))
+            if (property.Equals("yes") && income.Equals("no"))
             {
                 query += " or s.SavingsId = 29";
             }
@@ -56,11 +61,9 @@ public class QuestionnaireController : Controller
             query += " and sc.ConcessionId is null";
         }
 
-        var savings = _context.savings
+        return _context.savings
             .FromSqlRaw(query)
             .ToList();
-        
-        return View(savings);
     }
 
     private static async Task<HttpResponseMessage> GetSavingsData()
@@ -95,7 +98,7 @@ public class QuestionnaireController : Controller
                     if (!categoryIdList.Contains(categoryId))
                     {
                         categoryIdList.Add(categoryId);
-                        _context.Add(new SavingsCategory()
+                        _context.Add(new SavingsCategory
                             { CategoryId = categoryId, CategoryName = categoryName });
                         await _context.SaveChangesAsync();
                     }
@@ -115,7 +118,7 @@ public class QuestionnaireController : Controller
                             if (!concessionIdList.Contains(concessionId[i]))
                             {
                                 concessionIdList.Add(concessionId[i]);
-                                _context.Add(new Concession()
+                                _context.Add(new Concession
                                     { ConcessionId = concessionId[i], ConcessionName = concessionName[i] });
                                 await _context.SaveChangesAsync();
                             }
@@ -133,7 +136,7 @@ public class QuestionnaireController : Controller
                     if (!savingsIdList.Contains(savingsId))
                     {
                         savingsIdList.Add(savingsId);
-                        _context.Add(new Savings()
+                        _context.Add(new Savings
                         {
                             SavingsId = savingsId, Title = title,
                             Description = description, Method = method,
@@ -152,7 +155,7 @@ public class QuestionnaireController : Controller
                         {
                             try
                             {
-                                _context.Add(new SavingsConcession()
+                                _context.Add(new SavingsConcession
                                     { SavingsId = savingsId, ConcessionId = id });
                                 await _context.SaveChangesAsync();
                             }
