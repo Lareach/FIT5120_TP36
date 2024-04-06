@@ -6,7 +6,6 @@
      <title>@ViewData["Title"] - Co2HomeEmissionsTP36</title>
      <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
      <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-     <link rel="stylesheet" href="~/Co2HomeEmissionsTP36.styles.css" asp-append-version="true" />
      <link href="~/css/StyleSheet.css" rel="stylesheet" />
 
  </head>
@@ -33,9 +32,6 @@
                          <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ClimateAction">Climate Action</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                     </li>
-                     <li class="nav-item">
                          <a class="nav-link text-dark" asp-area="" asp-controller="Questionnaire" asp-action="Index">Questionnaire</a>
                      </li>
                      <li class="nav-item">
@@ -49,7 +45,7 @@
 
  <!-- 2 different containers fo Homepage and for everything else -->
  <!-- Required to do this so that banner image is spread until side ends of page -->
- <div class="@("body-container" + (ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? " home-container" : ""))">
+ <div class="@("body-container" + (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? " home-container" : ""))">
      <main role="main" class="pb-3">
          @RenderBody()
      </main>
@@ -64,7 +60,6 @@
  <script src="~/lib/jquery/dist/jquery.min.js"></script>
  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
  <script src="~/js/site.js" asp-append-version="true"></script>
- <script src="~/assets/js/counter.js"></script>
 
  @await RenderSectionAsync("Scripts", required: false)
  </body>
