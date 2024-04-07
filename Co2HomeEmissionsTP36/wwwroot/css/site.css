@@ -28,12 +28,18 @@ html {
 .questionnaire-form {
   text-align: center;
   color: #4a6f70;
-  margin-top: 60px;
+  margin-top: 15px;
   margin-bottom: 185px;
   min-height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.questionnaire-form-heading {
+  text-align: center;
+  color: #4a6f70;
+  font-size: 26px;
 }
 
 .questionnaire-form .form-item-title {
@@ -190,11 +196,16 @@ html {
   flex-direction: column;
 }
 
+.questionnaire-accordion-tail-content-bottom-left div {
+  color: #2e4e42;
+}
+
 .questionnaire-results-button-container
 {
   display: flex;
   align-items: center;
   position: relative;
+  margin-top: 10px;
 }
 
 .questionnaire-results-button {
@@ -207,7 +218,6 @@ html {
   max-height: 48px;
   align-items: center;
   display: flex;
-  margin-left: 19px;
 }
 
 .questionnaire-results-button:hover {

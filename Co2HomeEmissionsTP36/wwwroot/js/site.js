@@ -1,8 +1,10 @@
 ﻿jQuery(document).ready(function($) {
     showHideQuestionnaire();
+    uncheckInput();
     clickAccordion();
 });
 
+// Display one question at a time
 function showHideQuestionnaire()
 {
     var currentQuestion = 1;
@@ -57,6 +59,37 @@ function showHideQuestionnaire()
     });
 }
 
+// Uncheck inputs if the none of the above input is selected
+function uncheckInput()
+{
+    $('#noneOfTheAbove').change(function() {
+        if ($(this).is(':checked')) {
+            $('input[name="utilityBill"]').prop('checked', false);
+            $('#noneOfTheAbove').prop('checked', true);
+        }
+    });
+
+    $('input[name="utilityBill"]').not('#noneOfTheAbove').change(function() {
+        if ($(this).is(':checked')) {
+            $('#noneOfTheAbove').prop('checked', false);
+        }
+    });
+
+    $('#noneOfTheAboveConcession').change(function() {
+        if ($(this).is(':checked')) {
+            $('input[name="concessionCards"]').prop('checked', false);
+            $('#noneOfTheAboveConcession').prop('checked', true);
+        }
+    });
+
+    $('input[name="concessionCards"]').not('#noneOfTheAboveConcession').change(function() {
+        if ($(this).is(':checked')) {
+            $('#noneOfTheAboveConcession').prop('checked', false);
+        }
+    });
+}
+
+// Open and close accordion
 function clickAccordion()
 {
     $.each($(".accordion-container"), function(i) {
