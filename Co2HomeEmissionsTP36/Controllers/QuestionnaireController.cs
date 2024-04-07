@@ -28,16 +28,20 @@ public class QuestionnaireController : Controller
         // Call API for new records and updates database
         await RefreshSavingsData();
 
+        // Get form input
         var utilityBills = Request.Form["utilityBill"].ToList();
         var propertyOwnership = Request.Form["propertyOwnership"].ToString();
         var householdIncome = Request.Form["householdIncome"].ToString();
         var concessionCards = Request.Form["concessionCards"].ToList();
         
+        // Display results page
         return View(InferBenefits(utilityBills, propertyOwnership, householdIncome, concessionCards));
     }
 
+    // Select benefits to display
     public List<Savings> InferBenefits(List<string?> utility, string property, string income, List<string?> concession)
     {
+        // SQL query to select benefits
         var query = """
                         SELECT DISTINCT s.*
                         FROM Savings s
@@ -47,6 +51,7 @@ public class QuestionnaireController : Controller
                         WHERE ca.CategoryName = 'Energy and utilities'
                     """;
         
+        // Conditions for benefits to display 
         if (!utility.Contains("None of the above") && !concession.Contains("None of the above"))
         { 
             query += $" and c.ConcessionName in ('{string.Join("', '", utility)}')";
@@ -61,6 +66,7 @@ public class QuestionnaireController : Controller
             query += " and sc.ConcessionId is null";
         }
 
+        // Query database and get benefits as a list
         return _context.savings
             .FromSqlRaw(query)
             .ToList();
@@ -68,12 +74,14 @@ public class QuestionnaireController : Controller
 
     private static async Task<HttpResponseMessage> GetSavingsData()
     {
+        // API for benefits
         const string apiUrl = "https://savingsfinder.service.vic.gov.au/v1/savings/";
 
         // Make an HTTP GET request to the web API
         return await new HttpClient().GetAsync(apiUrl);
     }
     
+    // Call API to find new records and update database
     private async Task RefreshSavingsData()
     {
         var response = await GetSavingsData();
@@ -84,6 +92,7 @@ public class QuestionnaireController : Controller
             
             JsonDocument doc = JsonDocument.Parse(contents);
 
+            // Insert records into database tables
             if (doc.RootElement.TryGetProperty("data", out JsonElement dataArray))
             {
                 var categoryIdList = await _context.category.Select(c => c.CategoryId).ToListAsync();
@@ -95,6 +104,7 @@ public class QuestionnaireController : Controller
                     int categoryId = item.GetProperty("category_id").GetInt32();
                     string? categoryName = item.GetProperty("category_name").GetString();
 
+                    // Insert into Category table
                     if (!categoryIdList.Contains(categoryId))
                     {
                         categoryIdList.Add(categoryId);
@@ -106,6 +116,7 @@ public class QuestionnaireController : Controller
                     string? concessionIds = item.GetProperty("taxonomy_ids").GetString();
                     string? concessionNames = item.GetProperty("taxonomy_names").GetString();
 
+                    // Insert into Concession table
                     if (concessionIds != null && concessionNames != null)
                     {
                         List<int> concessionId = concessionIds.Split(',')
@@ -133,6 +144,7 @@ public class QuestionnaireController : Controller
                     string? eligibilityRequirements = item.GetProperty("eligibility_requirements").GetString();
                     string? ctaUrl = item.GetProperty("cta_url").GetString();
 
+                    // Insert into Savings table
                     if (!savingsIdList.Contains(savingsId))
                     {
                         savingsIdList.Add(savingsId);
@@ -146,6 +158,7 @@ public class QuestionnaireController : Controller
                         await _context.SaveChangesAsync();
                     }
 
+                    // Insert into SavingsConcession table
                     if (concessionIds != null)
                     {
                         List<int> concessionId = concessionIds.Split(',')

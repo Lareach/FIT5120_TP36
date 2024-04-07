@@ -16,6 +16,7 @@ public class SavingsContext : DbContext
     
     public DbSet<SavingsConcession>? savingsConcession { get; }
     
+    // Define database schema
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<SavingsCategory>()
