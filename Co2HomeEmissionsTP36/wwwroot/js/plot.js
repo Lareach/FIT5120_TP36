@@ -32,8 +32,7 @@ if(document.getElementById('plotly-graph') !== null) {
 
                     const yearlyYears = Object.keys(meanData).map(year => parseInt(year))
                     const yearlyMeanTemp = Object.values(meanData).map(year => parseFloat(year))
-                    const hasDrought = Object.keys(drought).map(year => parseInt(year))
-
+                    const hasDrought = Object.values(drought).map(year => parseInt(year))
                     const co2Years = co2Data.map(item => parseInt(item.Year));
                     const co2Levels = co2Data.map(item => parseFloat(item.Co2_Ave_ppm));
 
@@ -44,7 +43,7 @@ if(document.getElementById('plotly-graph') !== null) {
                         mode: 'lines+markers',
                         marker: {
                             size: 8,
-                            color: hasDrought
+                            color: hasDrought.map(year => year === 1 ? 'yellow' : '#00008B')
                         }
                     };
 
