@@ -22,16 +22,12 @@ namespace Co2HomeEmissionsTP36.Controllers
 		{
 			return View();
 		}
-		
-		public IActionResult Graph()
-		{
-			return View();
-		}
 
         public IActionResult ClimateAction()
         {
             return View();
         }
+        
 		public IActionResult GovernmentalSupport()
 		{
 			return View();
