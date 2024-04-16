@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Co2HomeEmissionsTP36.Migrations
 {
-    [DbContext(typeof(SavingsContext))]
-    [Migration("20240331074908_InitialCreate")]
+    [DbContext(typeof(DataContext))]
+    [Migration("20240416014354_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -43,6 +43,81 @@ namespace Co2HomeEmissionsTP36.Migrations
                     b.HasKey("ConcessionId");
 
                     b.ToTable("concession");
+                });
+
+            modelBuilder.Entity("Co2HomeEmissionsTP36.Models.EmissionFactor", b =>
+                {
+                    b.Property<int>("FactorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FactorId"));
+
+                    b.Property<int?>("EnergyId")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("ScopeOneEmission")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ScopeThreeEmission")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("ScopeTwoEmission")
+                        .HasColumnType("float");
+
+                    b.HasKey("FactorId");
+
+                    b.HasIndex("EnergyId");
+
+                    b.ToTable("emissionFactor");
+                });
+
+            modelBuilder.Entity("Co2HomeEmissionsTP36.Models.Energy", b =>
+                {
+                    b.Property<int>("EnergyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EnergyId"));
+
+                    b.Property<double?>("EnergyContentFactor")
+                        .HasColumnType("float");
+
+                    b.Property<string>("EnergyName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("EnergyId");
+
+                    b.ToTable("energy");
+                });
+
+            modelBuilder.Entity("Co2HomeEmissionsTP36.Models.EnergyConsumption", b =>
+                {
+                    b.Property<int>("ConsumptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConsumptionId"));
+
+                    b.Property<double?>("EmissionAmount")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("EnergyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HouseholdNum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Year")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("ConsumptionId");
+
+                    b.HasIndex("EnergyId");
+
+                    b.ToTable("energyConsumption");
                 });
 
             modelBuilder.Entity("Co2HomeEmissionsTP36.Models.Savings", b =>
@@ -129,6 +204,24 @@ namespace Co2HomeEmissionsTP36.Migrations
                     b.HasIndex("ConcessionId");
 
                     b.ToTable("savingsConcession");
+                });
+
+            modelBuilder.Entity("Co2HomeEmissionsTP36.Models.EmissionFactor", b =>
+                {
+                    b.HasOne("Co2HomeEmissionsTP36.Models.Energy", "Energy")
+                        .WithMany()
+                        .HasForeignKey("EnergyId");
+
+                    b.Navigation("Energy");
+                });
+
+            modelBuilder.Entity("Co2HomeEmissionsTP36.Models.EnergyConsumption", b =>
+                {
+                    b.HasOne("Co2HomeEmissionsTP36.Models.Energy", "Energy")
+                        .WithMany()
+                        .HasForeignKey("EnergyId");
+
+                    b.Navigation("Energy");
                 });
 
             modelBuilder.Entity("Co2HomeEmissionsTP36.Models.Savings", b =>
