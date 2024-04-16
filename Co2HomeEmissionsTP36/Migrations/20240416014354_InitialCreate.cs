@@ -39,6 +39,20 @@ namespace Co2HomeEmissionsTP36.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "energy",
+                columns: table => new
+                {
+                    EnergyId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EnergyName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    EnergyContentFactor = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_energy", x => x.EnergyId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "savings",
                 columns: table => new
                 {
@@ -61,6 +75,48 @@ namespace Co2HomeEmissionsTP36.Migrations
                         column: x => x.CategoryId,
                         principalTable: "category",
                         principalColumn: "CategoryId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "emissionFactor",
+                columns: table => new
+                {
+                    FactorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ScopeOneEmission = table.Column<double>(type: "float", nullable: true),
+                    ScopeTwoEmission = table.Column<double>(type: "float", nullable: true),
+                    ScopeThreeEmission = table.Column<double>(type: "float", nullable: true),
+                    EnergyId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_emissionFactor", x => x.FactorId);
+                    table.ForeignKey(
+                        name: "FK_emissionFactor_energy_EnergyId",
+                        column: x => x.EnergyId,
+                        principalTable: "energy",
+                        principalColumn: "EnergyId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "energyConsumption",
+                columns: table => new
+                {
+                    ConsumptionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Year = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    HouseholdNum = table.Column<int>(type: "int", nullable: true),
+                    EmissionAmount = table.Column<double>(type: "float", nullable: true),
+                    EnergyId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_energyConsumption", x => x.ConsumptionId);
+                    table.ForeignKey(
+                        name: "FK_energyConsumption_energy_EnergyId",
+                        column: x => x.EnergyId,
+                        principalTable: "energy",
+                        principalColumn: "EnergyId");
                 });
 
             migrationBuilder.CreateTable(
@@ -90,6 +146,16 @@ namespace Co2HomeEmissionsTP36.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_emissionFactor_EnergyId",
+                table: "emissionFactor",
+                column: "EnergyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_energyConsumption_EnergyId",
+                table: "energyConsumption",
+                column: "EnergyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_savings_CategoryId",
                 table: "savings",
                 column: "CategoryId");
@@ -104,7 +170,16 @@ namespace Co2HomeEmissionsTP36.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "emissionFactor");
+
+            migrationBuilder.DropTable(
+                name: "energyConsumption");
+
+            migrationBuilder.DropTable(
                 name: "savingsConcession");
+
+            migrationBuilder.DropTable(
+                name: "energy");
 
             migrationBuilder.DropTable(
                 name: "concession");
