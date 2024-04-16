@@ -9,7 +9,7 @@ namespace Co2HomeEmissionsTP36TestProject;
 
 public class IntegrationTests
 {
-    private readonly SavingsContext _context;
+    private readonly DataContext _context;
     private readonly QuestionnaireController _controller;
     
     public IntegrationTests()
@@ -22,12 +22,12 @@ public class IntegrationTests
             .Build();
         
         var services = new ServiceCollection()
-            .AddDbContext<SavingsContext>(options =>
+            .AddDbContext<DataContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
             )
             .BuildServiceProvider();
         
-        _context = services.CreateScope().ServiceProvider.GetRequiredService<SavingsContext>();
+        _context = services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
         _controller = new QuestionnaireController(_context);
     }
     
