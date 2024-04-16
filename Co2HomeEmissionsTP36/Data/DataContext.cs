@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Co2HomeEmissionsTP36.Data;
 
-public class SavingsContext : DbContext
+public class DataContext : DbContext
 {
-    public SavingsContext(DbContextOptions<SavingsContext> options) : base(options)
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
 
     }
