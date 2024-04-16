@@ -16,6 +16,12 @@ public class DataContext : DbContext
     
     public DbSet<SavingsConcession>? savingsConcession { get; }
     
+    public DbSet<Energy> energy { get; set; }
+    
+    public DbSet<EmissionFactor> emissionFactor { get; set; }
+    
+    public DbSet<EnergyConsumption> energyConsumption { get; set; }
+    
     // Define database schema
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,5 +67,24 @@ public class DataContext : DbContext
             .HasOne(sc => sc.Concession)
             .WithMany()
             .HasForeignKey(sc => sc.ConcessionId);
+        
+        modelBuilder.Entity<Energy>()
+            .HasKey(c => c.EnergyId);
+
+        modelBuilder.Entity<EmissionFactor>()
+            .HasKey(c => c.FactorId);
+        
+        modelBuilder.Entity<EnergyConsumption>()
+            .HasKey(s => s.ConsumptionId);
+        
+        modelBuilder.Entity<EmissionFactor>()
+            .HasOne(sc => sc.Energy)
+            .WithMany()
+            .HasForeignKey(sc => sc.EnergyId);
+
+        modelBuilder.Entity<EnergyConsumption>()
+            .HasOne(sc => sc.Energy)
+            .WithMany()
+            .HasForeignKey(sc => sc.EnergyId);
     }
 }
