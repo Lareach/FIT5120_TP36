@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "Carbon Calculator";
+}
+
+<h4 class="questionnaire-form-heading">Carbon Calculator</h4>
+
+<form id="cb-calculator" class="questionnaire-form" asp-action="Results">
+    <div id="calculator-main" class="question">
+        <br/><div class="form-item-title">Which forms of energy has your household used?</div>
+        <div class="form-item-desc">Select all that apply</div>
+        <div class="form-item-body">
+            <input class="form-input" type="checkbox" name="main" id="electricityBill" value="electricity">
+            <div class="form-label-container">
+                <label class="form-input-label" for="electricityBill"></label>
+                <label>Electricity</label>
+            </div>
+            <input class="form-input" type="checkbox" name="main" id="waterBill" value="gas">
+            <div class="form-label-container">
+                <label class="form-input-label" for="waterBill"></label>
+                <label>Natural Gas</label>
+            </div>
+            <input class="form-input" type="checkbox" name="main" id="gasBill" value="lpg">
+            <div class="form-label-container">
+                <label class="form-input-label" for="gasBill"></label>
+                <label>LPG</label>
+            </div>
+            <input class="form-input" type="checkbox" name="main" id="noneOfTheAbove" value="firewood">
+            <div class="form-label-container">
+                <label class="form-input-label" for="noneOfTheAbove"></label>
+                <label>Firewood</label>
+            </div>
+        </div>
+    </div>
+    <div id="calculator-electricity" class="question sub-option">
+        <br/><div class="form-item-title">How much electricity has your household consumed?</div>
+        <div class="form-item-body">
+            <input class="form-input-number" type="number" name="electricity" value="yes">
+            <label for="">kWh</label>
+        </div>
+    </div>
+    <div id="calculator-gas" class="question sub-option">
+        <br/><div class="form-item-title">How much Natural Gas has your household consumed?</div>
+        <div class="form-item-body">
+            <input class="form-input-number" type="number" name="gas" value="yes">
+            <label for="">m<sup>3</sup></label>
+        </div>
+    </div>
+    <div id="calculator-lpg" class="question sub-option">
+        <br/><div class="form-item-title">How much LPG has your household consumed?</div>
+        <div class="form-item-body">
+            <input class="form-input-number" type="number" name="lpg" value="yes">
+            <label for="">kL</label>
+        </div>
+    </div>
+    <div id="calculator-firewood" class="question sub-option">
+        <br/><div class="form-item-title">How much Natural Gas has your household consumed?</div>
+        <div class="form-item-body">
+            <input class="form-input-number" type="number" name="firewood" value="yes">
+            <label for="">t</label>
+        </div>
+    </div>
+    <div id="calculator-result" class="question">
+        <br/><h5 class="form-item-title">CALCULATOR RESULTS</h5>
+        <div class="form-item-desc">
+            Your household's carbon footprint is
+        </div>
+        <br/>
+        <b id="calculator-result-num" class="h2">0.377</b>tonnes
+    </div>
+    <div class="form-buttons">
+        <button type="button" class="btn btn-primary back-btn" style="display:none;">Back</button>
+        <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
+        <button type="button" class="btn btn-primary submit-btn" disabled style="display:none;">Submit</button>
+    </div>
+</form>
