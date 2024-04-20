@@ -150,6 +150,7 @@ function handleCalculator() {
     $('#cb-calculator button').click(function () {
         var isNext = $(this).hasClass("next-btn");
         var isPrev = $(this).hasClass("back-btn");
+        var isSubmit = $(this).hasClass("submit-btn");
         // console.log(isNext, pageList, subPageIndex, subOptions);
 
         $('.question').hide();
@@ -182,13 +183,17 @@ function handleCalculator() {
             $('.back-btn').hide();
         }
 
-        if (subPageIndex >= subOptions.length) {
+        var len = subOptions.length;
+        len = isPrev ? len - 1 : len;
+        if (subPageIndex >= len) {
             $('.next-btn').hide();
-            if (currentPage == 'result') {
+            if (currentPage === 'result') {
                 $('.submit-btn').hide();
             } else {
                 $('.submit-btn').show();
             }
+        } else if (isSubmit) {
+            $('.submit-btn').hide();
         } else {
             $('.next-btn').show();
             $('.submit-btn').hide();
@@ -202,43 +207,30 @@ function calculateAll(map) {
     var total = BigNumber(0);
     var result = $('#calculator-result-num');
 
-    var paramsMap = {
-        // Victoria
-        'electricity': {
-            'EC': 1,
-            'EF_SUM': BigNumber(0.85).plus(0.07),
-            // 'EF_SUM': 0.92,
-        },
-        // Natural gas distributed in a pipeline
-        'gas': {
-            'EC': 0.0393,
-            'EF_SUM': BigNumber(51.53).plus(4.0),
-        },
-        // Liquefied petroleum gas(LPG)
-        'lpg': {
-            'EC': 25.7,
-            'EF_SUM': BigNumber(60.60).plus(20.2),
-        },
-        // Dry wood
-        'firewood': {
-            'EC': 16.2,
-            'EF_SUM': BigNumber(1.2).plus(0),
-        },
-    };
-
-    for (const key in map) {
-        if (key == 'main') {
-            continue
-        }
-        var Q = map[key][0];
-        var params = paramsMap[key]
-        var EC = params['EC'];
-        var EF_SUM = params['EF_SUM'];
-        var resultNum = EF_SUM.times(EC).times(Q).div(1000);
-        console.log('resultNum: ', resultNum, "key: ", key, "params: ", params, "Q: ", Q);
-        total = total.plus(resultNum);
+    var keyMap = {
+        'Electricity': 'electricity',
+        'Natural Gas': 'gas',
+        'LPG': 'lpg',
+        'Firewood': 'firewood',
     }
-    var totalResult = total.toFixed(4)
-    console.log('total: ', totalResult);
-    result.text(totalResult);
+
+    jQuery.getJSON('/api/energy', function(data) {
+        for (let i = 0; i < data.length; i++) {
+            const ele = data[i];
+            var key = keyMap[ele['energyName']];
+            var inputValue = map[key]
+            if (!inputValue) {
+                continue;
+            }
+            var Q = inputValue[0];
+            var EC = BigNumber(ele['energyContentFactor'] || 0);
+            var EF_SUM = BigNumber(ele['scopeOneEmission'] || 0).plus(ele['scopeTwoEmission'] || 0).plus(ele['scopeThreeEmission'] || 0);
+            var resultNum = EF_SUM.times(EC).times(Q).div(1000);
+            console.log('resultNum: ', resultNum, "key: ", key, "ele: ", ele, "Q: ", Q, "EC: ", EC, "EF_SUM: ", EF_SUM);
+            total = total.plus(resultNum);
+        }
+        var totalResult = total.toFixed(4)
+        console.log('total: ', totalResult);
+        result.text(totalResult);
+    })
 }
