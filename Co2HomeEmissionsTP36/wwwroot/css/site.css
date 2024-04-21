@@ -229,3 +229,125 @@ html {
 .form-buttons {
   margin-top: 15px;
 }
+
+.calculator-intro-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.calculator-intro-action img {
+  max-width: 200px
+}
+
+.calculator-intro-subheading {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.calculator-form-heading {
+  text-align: center;
+  color: #4a6f70;
+  font-size: 26px;
+  font-weight: 600;
+  margin: 15px 0;
+}
+
+#calculator-intro-button:hover {
+  background-color: #5E8585;
+}
+
+.show {
+  display: block !important;
+}
+
+.form-checkbox-image {
+  display: flex;
+  width: 180px;
+  height: 65px;
+  background-color: #4a6f702b;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  margin: 30px 0;
+}
+
+.form-item-body .calculator-icon {
+  width: 22px;
+  height: 22px;
+  background-repeat: no-repeat;
+}
+
+.form-checkbox-image .calculator-icon {
+  width: 45px;
+  height: 45px;
+  position: absolute;
+}
+
+.electricity-svg {
+  background-image: url("/images/electricity.svg");
+}
+
+.gas-svg {
+  background-image: url("/images/gas.svg");
+}
+
+.lpg-svg {
+  background-image: url("/images/lpg.svg");
+}
+
+.wood-svg {
+  background-image: url("/images/wood.svg");
+}
+
+.questionmark-svg {
+  background-image: url("/images/questionmark.svg");
+  cursor: pointer;
+}
+
+.form-checkbox-image input {
+  appearance: none;
+  -moz-appearance: none;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 25px;
+  background-color: #0ff0;
+  border: 2px solid #4a6f70;;
+  margin-left: 135px;
+  position: relative;
+  z-index: 1;
+}
+
+#cb-calculator .form-item-body {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+#cb-calculator .question.sub-option .form-item-body {
+  margin: 40px 0 30px 0;
+}
+
+.form-checkbox-image .checkmark {
+  position: absolute;
+  margin-left: 135px;
+  font-weight: 600;
+  margin-top: 1px;
+}
+
+.calculator-average {
+  cursor: pointer;
+  text-decoration: underline;
+  height: fit-content;
+}
+
+.hide {
+  display: none;
+}
+
+
+.display {
+  display: block;
+}

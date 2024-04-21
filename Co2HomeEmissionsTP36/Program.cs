@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Co2HomeEmissionsTP36.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,10 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Add DbContext to the container.
-builder.Services.AddDbContext<Co2HomeEmissionsTP36.Data.SavingsContext>(options =>
+builder.Services.AddDbContext<DataContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+using(var scope = app.Services.CreateScope())
+{
+	SeedData.Initialize(scope.ServiceProvider);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -8,9 +8,9 @@ namespace Co2HomeEmissionsTP36.Controllers;
 
 public class QuestionnaireController : Controller
 {
-    private readonly SavingsContext _context;
+    private readonly DataContext _context;
     
-    public QuestionnaireController(SavingsContext context)
+    public QuestionnaireController(DataContext context)
     {
         _context = context;
     }

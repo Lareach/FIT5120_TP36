@@ -38,6 +38,9 @@
                      <li class="nav-item">
                          <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GovernmentalSupport">Governmental Support</a>
                      </li>
+                     <li class="nav-item">
+                         <a class="nav-link text-dark" asp-area="" asp-controller="CarbonCalculator" asp-action="Index">Carbon Calculator</a>
+                     </li>
                  </ul>
              </div>
          </nav>
@@ -61,8 +64,10 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/plotly/plotly-2.30.0.min.js" asp-append-version="true"></script>
+<script src="~/lib/bignumber.min.js" asp-append-version="true"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/plot.js" asp-append-version="true"></script>
+
 
  @await RenderSectionAsync("Scripts", required: false)
  </body>
