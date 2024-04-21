@@ -225,3 +225,7 @@ html {
 .accordion-close {
   max-height: 0;
 }
+
+.form-buttons {
+  margin-top: 15px;
+}
