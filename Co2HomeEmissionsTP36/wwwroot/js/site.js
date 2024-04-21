@@ -2,20 +2,18 @@
     showHideQuestionnaire();
     uncheckInput();
     clickAccordion();
-    handleCalculator();
+    displayCheckmark();
+    initCalculator();
 });
 
 // Display one question at a time
 function showHideQuestionnaire() {
-    var currentQuestion = 1;
-
-    // Initially disable the next button
-    $("#nextButton").prop("disabled", true);
+    let currentQuestion = 1;
 
     // Check if at least one option is selected before enabling the next button
     $(".question").each(function () {
         $(this).find(":input").change(function () {
-            var isValid = $(this).closest(".question").find(":input:checked").length > 0;
+            let isValid = $(this).closest(".question").find(":input:checked").length > 0;
             $("#nextButton").prop("disabled", !isValid);
         });
     });
@@ -106,12 +104,44 @@ function clickAccordion() {
     }
 }
 
+function displayCheckmark() {
+    $.each($(".form-checkbox-image"), function (i) {
+        $(this).addClass("_" + (i + 1));
+    });
+
+    let moduleCount = $(".form-checkbox-image").length;
+
+    for (let j = 1; j <= moduleCount; j++) {
+        let currentModule = ".form-checkbox-image._" + j + " ";
+
+        $(currentModule + ".form-input").click(function (e) {
+            if($(currentModule + ".checkmark").hasClass("display")) {
+                $(currentModule + ".checkmark").addClass("hide");
+                $(currentModule + ".checkmark").removeClass("display");
+            }
+            else {
+                $(currentModule + ".checkmark").addClass("display");
+                $(currentModule + ".checkmark").removeClass("hide");
+            }
+        });
+    }
+}
+
+function initCalculator() {
+    $('#calculator-intro').show();
+    
+    $('#calculator-intro-button').click(function (e) {
+        $('#calculator-intro').hide();
+        handleCalculator();
+    });
+}
 
 function handleCalculator() {
     var subPageIndex = 0;
     var pageList = ['main']
     var main = $('#calculator-main');
     main.show();
+    $('.btn.btn-primary.next-btn').show();
     var subOptions = [];
     var inputValueMap = {};
     main.find(":input").change(function () {

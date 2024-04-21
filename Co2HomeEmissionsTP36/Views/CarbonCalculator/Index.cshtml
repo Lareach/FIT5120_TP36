@@ -2,74 +2,100 @@
     ViewData["Title"] = "Carbon Calculator";
 }
 
-<h4 class="questionnaire-form-heading">Carbon Calculator</h4>
-
-<form id="cb-calculator" class="questionnaire-form" asp-action="Results">
+<form id="cb-calculator" class="questionnaire-form">
+    <div id="calculator-intro" class="question">
+        <span class="calculator-intro-subheading">Welcome</span>
+        <h2 class="calculator-form-heading">Calculate your household's carbon footprint</h2>
+        <p>Enter data about your energy usage to determine your carbon footprint</p>
+        <div class="calculator-intro-action">
+            <img src="/images/4991854_2632743.jpg" alt=""/>
+            <button type="button" class="btn btn-primary" id="calculator-intro-button">Get started</button>
+        </div>
+    </div>
     <div id="calculator-main" class="question">
-        <br/><div class="form-item-title">Which forms of energy has your household used?</div>
+        <span class="calculator-intro-subheading">Energy</span>
+        <h2 class="form-item-title calculator-form-heading">
+            Over the past year, which forms of energy has your household used?
+        </h2>
         <div class="form-item-desc">Select all that apply</div>
         <div class="form-item-body">
-            <input class="form-input" type="checkbox" name="main" id="electricityBill" value="electricity">
-            <div class="form-label-container">
-                <label class="form-input-label" for="electricityBill"></label>
-                <label>Electricity</label>
+            <div class="form-checkbox-image">
+                <div class="calculator-icon electricity-svg"></div>
+                <input class="form-input show" type="checkbox" name="main" id="electricity" value="electricity">
+                <span class="checkmark hide">&#10003;</span>
             </div>
-            <input class="form-input" type="checkbox" name="main" id="waterBill" value="gas">
-            <div class="form-label-container">
-                <label class="form-input-label" for="waterBill"></label>
-                <label>Natural Gas</label>
+            <div class="form-checkbox-image">
+                <div class="calculator-icon gas-svg"></div>
+                <input class="form-input show" type="checkbox" name="main" id="gas" value="gas">
+                <span class="checkmark hide">&#10003;</span>
             </div>
-            <input class="form-input" type="checkbox" name="main" id="gasBill" value="lpg">
-            <div class="form-label-container">
-                <label class="form-input-label" for="gasBill"></label>
-                <label>LPG</label>
+            <div class="form-checkbox-image">
+                <div class="calculator-icon lpg-svg"></div>
+                <input class="form-input show" type="checkbox" name="main" id="lpg" value="lpg">
+                <span class="checkmark hide">&#10003;</span>
             </div>
-            <input class="form-input" type="checkbox" name="main" id="noneOfTheAbove" value="firewood">
-            <div class="form-label-container">
-                <label class="form-input-label" for="noneOfTheAbove"></label>
-                <label>Firewood</label>
+            <div class="form-checkbox-image">
+                <div class="calculator-icon wood-svg"></div>
+                <input class="form-input show" type="checkbox" name="main" id="firewood" value="firewood">
+                <span class="checkmark hide">&#10003;</span>
             </div>
         </div>
     </div>
     <div id="calculator-electricity" class="question sub-option">
-        <br/><div class="form-item-title">How much electricity has your household consumed?</div>
+        <span class="calculator-intro-subheading">Energy - Electricity</span>
+        <h2 class="form-item-title calculator-form-heading">
+            Over the past year, how much electricity has your household consumed?
+        </h2>
         <div class="form-item-body">
-            <input class="form-input-number" type="number" name="electricity" value="yes">
-            <label for="">kWh</label>
+            <input class="form-input-number" name="electricity">
+            <label>kWh</label>
+            <div class="calculator-icon questionmark-svg"></div>
+            <span class="calculator-average">Use average for Victoria</span>
         </div>
     </div>
     <div id="calculator-gas" class="question sub-option">
-        <br/><div class="form-item-title">How much Natural Gas has your household consumed?</div>
+        <span class="calculator-intro-subheading">Energy - Natural Gas</span>
+        <h2 class="form-item-title calculator-form-heading">
+            Over the past year, how much natural gas has your household consumed?
+        </h2>
         <div class="form-item-body">
-            <input class="form-input-number" type="number" name="gas" value="yes">
-            <label for="">m<sup>3</sup></label>
+            <input class="form-input-number" name="gas">
+            <label>m<sup>3</sup></label>
+            <div class="calculator-icon questionmark-svg"></div>
+            <span class="calculator-average">Use average for Victoria</span>
         </div>
     </div>
     <div id="calculator-lpg" class="question sub-option">
-        <br/><div class="form-item-title">How much LPG has your household consumed?</div>
+        <span class="calculator-intro-subheading">Energy - LPG</span>
+        <h2 class="form-item-title calculator-form-heading">
+            Over the past year, how much LPG has your household consumed?
+        </h2>
         <div class="form-item-body">
-            <input class="form-input-number" type="number" name="lpg" value="yes">
-            <label for="">kL</label>
+            <input class="form-input-number" name="lpg">
+            <label>kL</label>
+            <div class="calculator-icon questionmark-svg"></div>
         </div>
     </div>
     <div id="calculator-firewood" class="question sub-option">
-        <br/><div class="form-item-title">How much Natural Gas has your household consumed?</div>
+        <span class="calculator-intro-subheading">Energy - Firewood</span>
+        <h2 class="form-item-title calculator-form-heading">
+            Over the past year, how much firewood has your household consumed?
+        </h2>
         <div class="form-item-body">
-            <input class="form-input-number" type="number" name="firewood" value="yes">
-            <label for="">t</label>
+            <input class="form-input-number" name="firewood">
+            <label>t</label>
         </div>
     </div>
     <div id="calculator-result" class="question">
-        <br/><h5 class="form-item-title">CALCULATOR RESULTS</h5>
-        <div class="form-item-desc">
-            Your household's carbon footprint is
-        </div>
-        <br/>
-        <b id="calculator-result-num" class="h2">x </b>tonnes
+        <span class="calculator-intro-subheading">Calculator - Results</span>
+        <h2 class="form-item-title calculator-form-heading">
+            Your household's carbon footprint for the past year is
+        </h2>
+        <span><b id="calculator-result-num" class="h2">0</b> tonnes</span>
     </div>
     <div class="form-buttons">
         <button type="button" class="btn btn-primary back-btn" style="display:none;">Back</button>
-        <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
+        <button type="button" class="btn btn-primary next-btn" disabled style="display:none;">Next</button>
         <button type="button" class="btn btn-primary submit-btn" disabled style="display:none;">Submit</button>
     </div>
 </form>
