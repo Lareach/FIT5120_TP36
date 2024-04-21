@@ -1,4 +1,35 @@
-﻿.navbar {
+﻿@font-face {
+    font-family: 'Segoe UI Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Segoe UI Regular'), url('/fonts/Segoe UI.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Segoe UI Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Segoe UI Italic'), url('/fonts/Segoe UI Italic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Segoe UI Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Segoe UI Bold'), url('/fonts/Segoe UI Bold.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Segoe UI Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Segoe UI Bold Italic'), url('/fonts/Segoe UI Bold Italic.woff') format('woff');
+}
+
+.navbar {
     padding-bottom: 0;
     padding-top: 0;
     justify-content: center;
@@ -28,6 +59,10 @@ footer {
     max-height: 60px;
 }
 
+body a:hover {
+    color: #3f7484;
+}
+
 /* Center the title and give it some padding */
 .navbar-brand {
     text-align: center;
@@ -55,16 +90,15 @@ footer {
     z-index: 1000;
 }
 
+.navbar-brand.title-link:hover {
+    color: #333333;
+}
+
 /* Add some styling to the navigation links */
 .nav-link {
     color: #333;
     transition: color 0.2s ease-in-out;
 }
-
-    .nav-link:hover {
-        color: #007bff;
-    }
-
 
 /*banner section*/
 .banner {
@@ -82,19 +116,32 @@ footer {
     text-align: center; /* Center text horizontally */
     padding: 20px;
     box-sizing: border-box; /* Include padding in the total width */
-    /border: 5px solid #ddd;
 }
 
-    /*banner text*/
-    .banner p {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, serif;
-        font-palette: light;
-        font-size: 200%;
-        font-style: italic;
-    }
+.banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(37, 37, 37, 0.5);;
+    z-index: 1;
+}
 
+/*banner text*/
+.banner p {
+    margin: 0;
+    padding: 0;
+    font-palette: light;
+    font-size: 200%;
+    font-weight: 600;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 1;
+}
 
 /*body of page in ladder format*/
 .uv-index-guide-vertical {
@@ -267,7 +314,7 @@ img {
 /*default button */
 .btn.btn-outline-dark {
     color: #ffffff;
-    background-color: #3f7484;
+    background-color: #4C7070;
     border-color: cadetblue;
     border-radius: 20px;
 }
@@ -280,7 +327,7 @@ img {
 
 /*big button for the banner*/
 .btn.btn-outline-dark-big {
-    width: 56%;
+    width: 54%;
     min-width: 200px;
     margin-top: 5%;
     font-size: 20px;
@@ -529,73 +576,73 @@ img {
     }
 
 /* The text template for the website */
-.website-text {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, readable font */
+body {
+    font-family: 'Segoe UI Regular', Tahoma, Geneva, Verdana, sans-serif; /* Modern, readable font */
     line-height: 1.6; /* Spacing between lines */
     color: #333; /* Dark grey color for text */
-    padding-left: 1%; /* Padding around the content */
     max-width: 100%; /* Max width to ensure readability */
+    font-size: 17px
 }
 
-    .website-text p {
-        font-size: 16px; /* Standard size for paragraph text */
-        margin-bottom: 0; /* Space below paragraphs */
-    }
+body p {
+    font-size: 16px; /* Standard size for paragraph text */
+    margin-bottom: 0; /* Space below paragraphs */
+}
 
-    .website-text h1 {
-        font-size: 2.5em; /* Larger size for main headings */
-        margin-top: 0;
-        margin-bottom: 0;
-        color: cadetblue; /* Bootstrap primary color for headings */
-    }
+body h1 {
+    font-size: 2.5em; /* Larger size for main headings */
+    margin-top: 0;
+    margin-bottom: 0;
+    color: cadetblue; /* Bootstrap primary color for headings */
+}
 
-    .website-text h2 {
-        font-size: 2em; /* Slightly smaller than h1 */
-        margin-top: 0;
-        margin-bottom: 0;
-        color: #6c757d; /* Bootstrap secondary color for sub-headings */
-    }
+body h2 {
+    font-size: 2em; /* Slightly smaller than h1 */
+    margin-top: 0;
+    margin-bottom: 0;
+    color: cadetblue; /* Bootstrap secondary color for sub-headings */
+}
 
-    .website-text h3 {
-        font-size: 1.75em; /* Smaller than h2 */
-        margin-top: 0;
-        margin-bottom: 0;
-        color: #17a2b8; /* Bootstrap info color for lower-level headings */
-    }
+body h3 {
+    font-size: 1.75em; /* Smaller than h2 */
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #17a2b8; /* Bootstrap info color for lower-level headings */
+}
 
     /* Subtitles */
-    .website-text h4 {
-        font-size: 1.5em;
-        color: #495057; /* Darker gray */
-    }
+body h4 {
+    font-size: 1.5em;
+    color: #4a6f70;
+}
 
     /* Captions for images or figures */
-    .website-text .caption {
-        font-size: 14px;
-        color: #6c757d;
-        text-align: center;
-        margin-top: -5px;
-        margin-bottom: 0;
-    }
+body .caption {
+    font-size: 14px;
+    color: #6c757d;
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 0;
+}
 
     /* Bullet points (unordered lists) */
-    .website-text ul {
-        padding-left: 20px;
-        list-style-type: disc; /* Standard bullet points */
-    }
+body ul {
+    padding-left: 20px;
+    list-style-type: disc; /* Standard bullet points */
+}
 
     /* Numbered lists (ordered lists) */
-    .website-text ol {
-        padding-left: 20px;
-        list-style-type: decimal; /* Standard numbering */
-    }
+body ol {
+    padding-left: 20px;
+    list-style-type: decimal; /* Standard numbering */
+}
 
     /* Links */
-    .website-text a {
-        color: #3f7484; /* Bootstrap primary color */
-        text-decoration: underline;
-    }
+body a {
+    color: #3f7484; /* Bootstrap primary color */
+    text-decoration: underline;
+}
 
-        .website-text a:hover {
-            color: blue; /* Bootstrap primary color */
-        }
+main {
+    min-height: 77vh;
+}

@@ -28,12 +28,8 @@ html {
 .questionnaire-form {
   text-align: center;
   color: #4a6f70;
-  margin-top: 15px;
-  margin-bottom: 185px;
-  min-height: 280px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .questionnaire-form-heading {
@@ -86,6 +82,7 @@ html {
   position: relative;
   cursor: pointer;
 }
+
 .form-input-label::before {
   display: inline-block;
   content: " ";
@@ -108,26 +105,6 @@ html {
   margin-top: 10px;
 }
 
-.result-thd {
-  background: #1F2B2A;
-  color: white;
-  font-weight: normal;
-}
-
-.result-th {
-  font-weight: normal;
-  padding: 10px 20px;
-}
-
-.result-tbd-tr:nth-child(even) {
-  background: #CFDBDA;
-  color: white;
-}
-
-.result-td {
-  padding: 10px 20px;
-}
-
 .question {
   display: none;
 }
@@ -144,6 +121,10 @@ html {
 
 .questionnaire-result-container p, .questionnaire-result-container li {
   color: #2e4e42;
+}
+
+.questionnaire-result-container h4 {
+  color: #00826a;
 }
 
 .questionnaire-heading {
