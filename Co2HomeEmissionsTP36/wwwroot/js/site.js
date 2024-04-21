@@ -233,7 +233,6 @@ function handleCalculator() {
 }
 
 function calculateAll(map) {
-    console.log('calculateAll', map);
     var total = BigNumber(0);
     var result = $('#calculator-result-num');
 
@@ -253,14 +252,14 @@ function calculateAll(map) {
                 continue;
             }
             var Q = inputValue[0];
-            var EC = BigNumber(ele['energyContentFactor'] || 0);
+            var EC = BigNumber(ele['energyContentFactor'] || 1);
             var EF_SUM = BigNumber(ele['scopeOneEmission'] || 0).plus(ele['scopeTwoEmission'] || 0).plus(ele['scopeThreeEmission'] || 0);
             var resultNum = EF_SUM.times(EC).times(Q).div(1000);
-            console.log('resultNum: ', resultNum, "key: ", key, "ele: ", ele, "Q: ", Q, "EC: ", EC, "EF_SUM: ", EF_SUM);
+            //console.log('resultNum: ', resultNum, "key: ", key, "ele: ", ele, "Q: ", Q, "EC: ", EC, "EF_SUM: ", EF_SUM);
             total = total.plus(resultNum);
         }
         var totalResult = total.toFixed(4)
-        console.log('total: ', totalResult);
+        //console.log('total: ', totalResult);
         result.text(totalResult);
     })
 }
