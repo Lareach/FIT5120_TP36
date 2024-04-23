@@ -3,6 +3,8 @@
     uncheckInput();
     clickAccordion();
     displayCheckmark();
+    togglePopup();
+    useAverageValue();
     initCalculator();
 });
 
@@ -127,6 +129,54 @@ function displayCheckmark() {
     }
 }
 
+function togglePopup() {
+    $.each($(".question"), function (i) {
+        $(this).addClass("_" + (i + 1));
+    });
+
+    let moduleCount = $(".question").length;
+
+    for (let j = 1; j <= moduleCount; j++) {
+        let currentModule = ".question._" + j + " ";
+
+        $(currentModule + ".calculator-icon.questionmark-svg").click(function (e) {
+            if($(currentModule + ".notice-overlay").hasClass("display")) {
+                $(currentModule + ".notice-overlay").addClass("hide");
+                $(currentModule + ".notice-overlay").removeClass("display");
+            }
+            else {
+                $(currentModule + ".notice-overlay").addClass("display");
+                $(currentModule + ".notice-overlay").removeClass("hide");
+            }
+        });
+    }
+}
+
+function useAverageValue() {
+    if ($('#cb-calculator').length) {
+        fetch('/api/consumption')
+            .then(response => response.json())
+            .then(data => {
+
+                $("#calculator-electricity .calculator-average").click(function (e) {
+                    const desiredObject = data.find(item => item.energyId === 1 && item.year === "2019");
+                    console.log(desiredObject);
+                    $('.form-input-number[name="electricity"]').val(5454.36); // (PJ / num of households) * 278 * 10^6
+                    $('.form-input-number[name="electricity"]').trigger('input');
+                    $(".next-btn").prop("disabled", false);
+                    $(".submit-btn").prop("disabled", false);
+                });
+                $("#calculator-gas .calculator-average").click(function (e) {
+                    $('.form-input-number[name="gas"]').val(43861.89);  // (PJ / num of households) * 10^9
+                    $('.form-input-number[name="gas"]').trigger('input');
+                    $(".next-btn").prop("disabled", false);
+                    $(".submit-btn").prop("disabled", false);
+
+                });
+        }).catch(error => console.error('Error fetching energy consumption data:', error));
+    }
+}
+
 function initCalculator() {
     $('#calculator-intro').show();
     
@@ -140,10 +190,12 @@ function handleCalculator() {
     var subPageIndex = 0;
     var pageList = ['main']
     var main = $('#calculator-main');
-    main.show();
-    $('.btn.btn-primary.next-btn').show();
     var subOptions = [];
     var inputValueMap = {};
+
+    main.show();
+    $('.btn.btn-primary.next-btn').show();
+
     main.find(":input").change(function () {
         var checkedList = $(this).closest(".question").find(":input:checked");
         var isValid = checkedList.length > 0;
@@ -153,6 +205,7 @@ function handleCalculator() {
         });
         $(".next-btn").prop("disabled", !isValid);
     });
+
     $('#cb-calculator input').on('input', function () {
         var key = $(this).attr('name')
         var target = inputValueMap[key] = inputValueMap[key] || [];
@@ -177,6 +230,7 @@ function handleCalculator() {
             $('.submit-btn').prop("disabled", subPageIndex >= subOptions.length && !hasVal);
         }
     })
+
     $('#cb-calculator button').click(function () {
         var isNext = $(this).hasClass("next-btn");
         var isPrev = $(this).hasClass("back-btn");
@@ -189,13 +243,15 @@ function handleCalculator() {
             $('#calculator-' + nextPage).show();
             subPageIndex++;
             pageList.push(nextPage);
-        } else if (isPrev) {
+        }
+        else if (isPrev) {
             if (subPageIndex > 0) {
                 subPageIndex--;
             }
             pageList.pop();
             $('#calculator-' + pageList[pageList.length - 1]).show();
-        } else {
+        }
+        else {
             $('#calculator-result').show();
             pageList.push('result');
             calculateAll(inputValueMap);
@@ -209,7 +265,8 @@ function handleCalculator() {
 
         if (pageList.length > 1) {
             $('.back-btn').show();
-        } else {
+        }
+        else {
             $('.back-btn').hide();
         }
 
@@ -219,16 +276,18 @@ function handleCalculator() {
             $('.next-btn').hide();
             if (currentPage === 'result') {
                 $('.submit-btn').hide();
-            } else {
+            }
+            else {
                 $('.submit-btn').show();
             }
-        } else if (isSubmit) {
+        }
+        else if (isSubmit) {
             $('.submit-btn').hide();
-        } else {
+        }
+        else {
             $('.next-btn').show();
             $('.submit-btn').hide();
         }
-
     });
 }
 
@@ -253,6 +312,15 @@ function calculateAll(map) {
             }
             var Q = inputValue[0];
             var EC = BigNumber(ele['energyContentFactor'] || 1);
+
+            if(key === "gas") {
+                Q = Q / 1000;
+                EC = 1;
+            }
+            else if(key === "lpg" || key === "firewood") {
+                Q = Q / 1000;
+            }
+
             var EF_SUM = BigNumber(ele['scopeOneEmission'] || 0).plus(ele['scopeTwoEmission'] || 0).plus(ele['scopeThreeEmission'] || 0);
             var resultNum = EF_SUM.times(EC).times(Q).div(1000);
             //console.log('resultNum: ', resultNum, "key: ", key, "ele: ", ele, "Q: ", Q, "EC: ", EC, "EF_SUM: ", EF_SUM);
