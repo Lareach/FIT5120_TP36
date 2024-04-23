@@ -159,17 +159,16 @@ function useAverageValue() {
         fetch('/api/consumption')
             .then(response => response.json())
             .then(data => {
-
                 $("#calculator-electricity .calculator-average").click(function (e) {
-                    const desiredObject = data.find(item => item.energyId === 1 && item.year === "2019");
-                    console.log(desiredObject);
-                    $('.form-input-number[name="electricity"]').val(5454.36); // (PJ / num of households) * 278 * 10^6
+                    let obj = data.find(item => item.energyId === 1 && item.year === "2019");
+                    $('.form-input-number[name="electricity"]').val(((obj.emissionAmount / obj.householdNum) * 278 * Math.pow(10, 6)).toFixed(3));
                     $('.form-input-number[name="electricity"]').trigger('input');
                     $(".next-btn").prop("disabled", false);
                     $(".submit-btn").prop("disabled", false);
                 });
                 $("#calculator-gas .calculator-average").click(function (e) {
-                    $('.form-input-number[name="gas"]').val(43861.89);  // (PJ / num of households) * 10^9
+                    let obj = data.find(item => item.energyId === 2 && item.year === "2019");
+                    $('.form-input-number[name="gas"]').val(((obj.emissionAmount / obj.householdNum) * Math.pow(10, 9)).toFixed(3));
                     $('.form-input-number[name="gas"]').trigger('input');
                     $(".next-btn").prop("disabled", false);
                     $(".submit-btn").prop("disabled", false);
