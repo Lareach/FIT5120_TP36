@@ -354,6 +354,24 @@ html {
   height: fit-content;
 }
 
+.calculator-result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calculator-result {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.calculator-result-top {
+  font-weight: 600;
+  font-size: 43px;
+}
+
 .hide {
   display: none;
 }
