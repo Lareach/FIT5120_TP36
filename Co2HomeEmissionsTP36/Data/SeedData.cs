@@ -31,6 +31,11 @@ public static class SeedData
                 {
                     EnergyName = "Firewood",
                     EnergyContentFactor = 16.2
+                },
+                new Energy
+                {
+                    EnergyName = "Solar",
+                    EnergyContentFactor = null
                 }
             );
             context.SaveChanges();

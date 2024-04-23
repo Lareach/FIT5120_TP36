@@ -9,35 +9,42 @@ namespace Co2HomeEmissionsTP36.Controllers;
 public class ApiController : Controller
 {
     private readonly DataContext _context;
-    
+
     public ApiController(DataContext context)
     {
         _context = context;
     }
-    
+
     [HttpGet]
     [Route("api/energy")]
     public async Task<ActionResult<IEnumerable<object>>> GetEnergy()
     {
         var result = await _context.energy
-            .Join(
-                _context.emissionFactor,
-                e => e.EnergyId,
-                ef => ef.EnergyId,
-                (e, ef) => new
-                {
-                    e.EnergyId,
-                    e.EnergyName,
-                    e.EnergyContentFactor,
-                    ef.ScopeOneEmission,
-                    ef.ScopeTwoEmission,
-                    ef.ScopeThreeEmission,
-                })
-            .ToListAsync();
+        .GroupJoin(
+            _context.emissionFactor,
+            e => e.EnergyId,
+            ef => ef.EnergyId,
+            (e, efGroup) => new
+            {
+                Energy = e,
+                EmissionFactors = efGroup.DefaultIfEmpty()
+            })
+        .SelectMany(
+            x => x.EmissionFactors,
+            (e, ef) => new
+            {
+                e.Energy.EnergyId,
+                e.Energy.EnergyName,
+                e.Energy.EnergyContentFactor,
+                ScopeOneEmission = ef != null ? ef.ScopeOneEmission : null,
+                ScopeTwoEmission = ef != null ? ef.ScopeTwoEmission : null,
+                ScopeThreeEmission = ef != null ? ef.ScopeThreeEmission : null
+            })
+        .ToListAsync();
 
         return Ok(result);
     }
-    
+
     [HttpGet]
     [Route("api/consumption")]
     public async Task<ActionResult<IEnumerable<EnergyConsumption>>> GetConsumption()
@@ -45,6 +52,7 @@ public class ApiController : Controller
         return Ok(await _context.energyConsumption.Select(c => new
         {
             c.ConsumptionId,
+            c.EnergyId,
             c.Year,
             c.HouseholdNum,
             c.EmissionAmount
