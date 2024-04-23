@@ -405,3 +405,19 @@ html {
   flex-direction: column;
   gap: 18px;
 }
+
+@media only screen and (max-width: 576px) {
+  #cb-calculator .form-item-body {
+    flex-direction: column;
+    margin-top: 30px;
+  }
+
+  .form-checkbox-image {
+    margin-top: 0;
+  }
+
+  .notice-overlay {
+    inset: unset;
+    width: 355px;
+  }
+}
