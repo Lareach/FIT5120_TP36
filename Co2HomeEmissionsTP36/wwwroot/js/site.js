@@ -1,11 +1,13 @@
 ﻿jQuery(document).ready(function ($) {
+    let resultsList = [];
+
     showHideQuestionnaire();
     uncheckInput();
     clickAccordion();
     displayCheckmark();
     togglePopup();
     useAverageValue();
-    initCalculator();
+    initCalculator(resultsList);
 });
 
 // Display one question at a time
@@ -177,16 +179,16 @@ function useAverageValue() {
     }
 }
 
-function initCalculator() {
+function initCalculator(resultsList) {
     $('#calculator-intro').show();
     
     $('#calculator-intro-button').click(function (e) {
         $('#calculator-intro').hide();
-        handleCalculator();
+        handleCalculator(resultsList);
     });
 }
 
-function handleCalculator() {
+function handleCalculator(resultsList) {
     var subPageIndex = 0;
     var pageList = ['main']
     var main = $('#calculator-main');
@@ -252,9 +254,9 @@ function handleCalculator() {
             $('#calculator-' + pageList[pageList.length - 1]).show();
         }
         else {
+            calculateAll(inputValueMap, resultsList);
             $('#calculator-result').show();
             pageList.push('result');
-            calculateAll(inputValueMap);
         }
 
         var currentPage = pageList[pageList.length - 1];
@@ -291,7 +293,7 @@ function handleCalculator() {
     });
 }
 
-function calculateAll(map) {
+function calculateAll(map, resultsList) {
     var total = BigNumber(0);
     var result = $('#calculator-result-num');
 
@@ -325,6 +327,7 @@ function calculateAll(map) {
             var resultNum = EF_SUM.times(EC).times(Q).div(1000);
             //console.log('resultNum: ', resultNum, "key: ", key, "ele: ", ele, "Q: ", Q, "EC: ", EC, "EF_SUM: ", EF_SUM);
             total = total.plus(resultNum);
+            resultsList.push({"type": key, "input": inputValue[0], "emission": resultNum.toFixed(4)});
         }
         var totalResult = total.toFixed(4)
         //console.log('total: ', totalResult);
