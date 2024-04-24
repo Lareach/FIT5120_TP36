@@ -646,3 +646,20 @@ body a {
 main {
     min-height: 77vh;
 }
+
+@media only screen and (max-width: 576px) {
+    .banner p {
+        font-size: 28px;
+    }
+
+    .btn.btn-outline-dark-big {
+        font-size: 14px;
+    }
+
+    .website-text h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
