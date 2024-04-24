@@ -1,5 +1,5 @@
 ﻿jQuery(document).ready(function ($) {
-    let resultsList = [];
+    const resultsList = [];
 
     showHideQuestionnaire();
     uncheckInput();
@@ -8,6 +8,7 @@
     togglePopup();
     useAverageValue();
     initCalculator(resultsList);
+    displayInsights(resultsList);
 });
 
 // Display one question at a time
@@ -208,27 +209,29 @@ function handleCalculator(resultsList) {
     });
 
     $('#cb-calculator input').on('input', function () {
-        var key = $(this).attr('name')
-        var target = inputValueMap[key] = inputValueMap[key] || [];
-        var val = $(this).val();
+        if (/^\s*\d+(\.\d+)?\s*$/.test($(this).val())) {
+            var key = $(this).attr('name')
+            var target = inputValueMap[key] = inputValueMap[key] || [];
+            var val = $(this).val();
 
-        if ($(this).attr('type') === 'checkbox') {
-            if ($(this).is(':checked')) {
-                target.push(val)
+            if ($(this).attr('type') === 'checkbox') {
+                if ($(this).is(':checked')) {
+                    target.push(val)
+                } else {
+                    target = target.filter(function (value) {
+                        return value !== val
+                    })
+                }
             } else {
-                target = target.filter(function (value) {
-                    return value !== val
-                })
+                inputValueMap[key] = [val]
             }
-        } else {
-            inputValueMap[key] = [val]
-        }
 
-        var currentPage = pageList[pageList.length - 1];
-        if (inputValueMap[currentPage]) {
-            var hasVal = inputValueMap[currentPage].length > 0
-            $('.next-btn').prop("disabled", !hasVal);
-            $('.submit-btn').prop("disabled", subPageIndex >= subOptions.length && !hasVal);
+            var currentPage = pageList[pageList.length - 1];
+            if (inputValueMap[currentPage]) {
+                var hasVal = inputValueMap[currentPage].length > 0
+                $('.next-btn').prop("disabled", !hasVal);
+                $('.submit-btn').prop("disabled", subPageIndex >= subOptions.length && !hasVal);
+            }
         }
     })
 
@@ -326,10 +329,53 @@ function calculateAll(map, resultsList) {
             var resultNum = EF_SUM.times(EC).times(Q).div(1000);
             //console.log('resultNum: ', resultNum, "key: ", key, "ele: ", ele, "Q: ", Q, "EC: ", EC, "EF_SUM: ", EF_SUM);
             total = total.plus(resultNum);
-            resultsList.push({"type": key, "input": inputValue[0], "emission": resultNum.toFixed(4)});
+            resultsList.push({"type": key, "input": inputValue[0], "emission": resultNum.toFixed(3)});
         }
-        var totalResult = total.toFixed(4)
+        var totalResult = total.toFixed(3)
         //console.log('total: ', totalResult);
-        result.text(totalResult);
+        result.text(totalResult).trigger("input");
     })
+}
+
+function displayInsights(results) {
+    $("#calculator-result-num").on("input", function() {
+        let total = 0;
+
+        for(let i=0; i<results.length; i++) {
+            category = results[i].type;
+
+            if(category === "electricity") {
+                $(".electricity-insight .insights-left-bottom-input").text(results[i].input + " kWh");
+                $(".electricity-insight .insights-top-result").text(results[i].emission);
+                $(".electricity-insight .insights-right-intro").text("Your household used " + results[i].input + " kWh of electricity");
+                $(".electricity-insight.insights-left-item-container").show();
+                $(".insights-right.electricity-insight").show();
+            }
+            else if(category === "gas") {
+                $(".natural-gas-insight .insights-left-bottom-input").text(results[i].input + " MJ");
+                $(".natural-gas-insight .insights-top-result").text(results[i].emission);
+                $(".natural-gas-insight .insights-right-intro").text("Your household used " + results[i].input + " MJ of natural gas");
+                $(".natural-gas-insight.insights-left-item-container").show();
+                $(".insights-right.natural-gas-insight").show();
+            }
+            else if(category === "lpg") {
+                $(".lpg-insight .insights-left-bottom-input").text(results[i].input + " kg");
+                $(".lpg-insight .insights-top-result").text(results[i].emission);
+                $(".lpg-insight .insights-right-intro").text("Your household used " + results[i].input + " kg of LPG");
+                $(".lpg-insight.insights-left-item-container").show();
+                $(".insights-right.lpg-insight").show();
+            }
+            else if(category === "firewood") {
+                $(".firewood-insight .insights-left-bottom-input").text(results[i].input + " kg");
+                $(".firewood-insight .insights-top-result").text(results[i].emission);
+                $(".firewood-insight .insights-right-intro").text("Your household used " + results[i].input + " kg of firewood");
+                $(".firewood-insight.insights-left-item-container").show();
+                $(".insights-right.firewood-insight").show();
+            }
+            total += results[i].emission;
+        }
+        $(".insights-left-total-value").text(parseFloat(total));
+        $(".calculator-insights-container").show();
+        $(".recommendations-container").show();
+    });
 }

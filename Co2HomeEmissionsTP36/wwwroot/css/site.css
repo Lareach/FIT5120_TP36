@@ -370,6 +370,8 @@ html {
 .calculator-result-top {
   font-weight: 600;
   font-size: 43px;
+  min-width: 350px;
+  text-align: left;
 }
 
 .hide {
@@ -419,5 +421,128 @@ html {
   .notice-overlay {
     inset: unset;
     width: 355px;
+  }
+}
+
+.calculator-insights-container {
+  display: none;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.calculator-insights {
+  display: flex;
+  gap: 60px;
+}
+
+.calculator-insights-left {
+  width: 50%;
+}
+
+.calculator-insights-right {
+  width: 50%;
+}
+
+.insights-left-headings{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.insights-left-headings h4 {
+  font-weight: 600;
+}
+
+.insights-left-total {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+}
+
+.insights-left-items-container {
+  background-color: aliceblue;
+  margin-left: -10px;
+  border-radius: 10px;
+  padding: 10px 10px 10px 0;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.insights-left-item-container {
+  display: none;
+}
+
+.insights-left-item {
+  margin-left: 10px;
+}
+
+.insights-right {
+  display: none;
+}
+
+.insights-top-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.insights-right-intro {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.calculator-insights-right > h4 {
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.insights-right-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media only screen and (max-width: 576px) {
+  .calculator-insights {
+    flex-direction: column;
+  }
+
+  .calculator-insights-right {
+    width: 60%;
+  }
+
+  .calculator-insights-right {
+    width: 100%;
+  }
+}
+
+.recommendations-container {
+  display: none;
+}
+
+.recommendations {
+  display: flex;
+  padding: 30px 0 30px 0;
+  gap: 60px;
+}
+
+.recommendation {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 10px;
+}
+
+.recommendations .img-fluid {
+  max-height: 200px;
+  width: 300px;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 740px) {
+  .recommendations {
+    flex-direction: column;
   }
 }
