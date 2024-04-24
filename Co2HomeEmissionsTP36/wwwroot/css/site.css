@@ -520,6 +520,7 @@ html {
 
 .recommendations-container {
   display: none;
+  margin-top: 30px;
 }
 
 .recommendations {
