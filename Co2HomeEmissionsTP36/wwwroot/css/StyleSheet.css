@@ -77,6 +77,9 @@
     .navbar-expand-sm .navbar-toggler {
         display: block;
     }
+    .navbar {
+        padding-left: 0;
+    }
 }
 
 /* Ensure full width for the header */
@@ -501,7 +504,7 @@ img {
     padding-left: 5%;
     margin-right: auto;
     margin-left: auto;
-    padding-top: 150px;
+    padding-top: 100px;
     z-index: 5;
     position: relative;
 }
