@@ -97,3 +97,41 @@ if(document.getElementById('plotly-graph') !== null) {
         })
         .catch(error => console.error('Error fetching yearly temperature data:', error));
 }
+
+if(document.getElementById('solar-installations') !== null) {
+    fetch('/api/solarinstallations.json')
+        .then(response => response.json())
+        .then(data_grouped => {
+            const years = Array.from(new Set(data_grouped.map(entry => entry.Year)));
+            const sa4names = Array.from(new Set(data_grouped.map(entry => entry.sa4name)));
+            const data = [];
+
+            sa4names.forEach(sa4name => {
+                const yData = [];
+
+                years.forEach(year => {
+                    const filteredData = data_grouped.find(entry => entry.sa4name === sa4name && entry.Year === year);
+                    yData.push(filteredData ? filteredData.Installations : 0);
+                });
+
+                data.push({
+                    x: years,
+                    y: yData,
+                    name: sa4name,
+                    type: 'bar',
+                    hovertemplate: 'Year: %{x}<br>Installations: %{y}'
+                });
+            });
+
+            const layout = {
+                title: 'Solar Installations by Victorian Area',
+                xaxis: { title: 'Year' },
+                yaxis: { title: 'Installations' },
+                barmode: 'stack',
+                legend: { traceorder: 'normal' }
+            };
+
+            Plotly.newPlot('solar-installations', data, layout);
+    })
+    .catch(error => console.error('Error fetching solar installation data:', error));
+}
