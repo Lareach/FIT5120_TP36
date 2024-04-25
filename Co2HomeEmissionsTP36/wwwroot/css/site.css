@@ -388,7 +388,7 @@ html {
   overflow: auto;
   width: 400px;
   height: fit-content;
-  inset: 130px 23% auto auto;
+  inset: 75px 23% auto auto;
   border-radius: 22px;
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, 0.12);
 }
