@@ -1,6 +1,11 @@
 ﻿window.addEventListener('DOMContentLoaded', function () {
     var canvas = document.getElementById("renderCanvas");
     var engine = new BABYLON.Engine(canvas, true);
+
+    canvas.addEventListener("wheel", function(event) {
+        event.preventDefault();
+    });
+
     var scene = createScene();
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
@@ -101,6 +106,8 @@
         var camera = new BABYLON.ArcRotateCamera("camera1", Math.PI / 4, Math.PI / 4, 10, BABYLON.Vector3.Zero(), scene);
         camera.attachControl(canvas, true);
         var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
+
+        scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
 
         BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse3.glb", scene, function (newMeshes, particleSystems, skeletons) {
             if (newMeshes.length > 0) {
