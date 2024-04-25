@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Interactive House";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <!-- Title -->
+    <div class="website-text">
+        <h1>Climate Action</h1>
+        <br />
+    </div>
+
+    <div class="row" style="justify-content:space-between">
+        <div class="col-md-10" style="align-content: center">
+            <canvas id="renderCanvas" touch-action="none" style="width: 100%; height: 100vh;"></canvas>
+        </div>
+
+        <div class="col-md-2" style="align-content: center">
+            <div id="detailsContainer">
+                <h3 id="infoTitle">Node Details</h3>
+                <img id="infoImage" src="" alt="Node Image" style="width: 100%; display: none;">
+                <p id="infoDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="website-text">
+        <h1>Climate Action</h1>
+        <br />
+    </div>
+</div>
+
+<script src="~/js/modelViewer.js"></script>
