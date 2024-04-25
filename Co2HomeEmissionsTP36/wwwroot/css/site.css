@@ -17,6 +17,10 @@ html {
   min-height: 100%;
 }
 
+.bold {
+  font-family: 'Segoe UI Bold';
+}
+
 .navbar.mb-3 {
   margin-bottom: 0 !important;
 }
@@ -32,10 +36,15 @@ html {
   flex-direction: column;
 }
 
+.questionnaire-form-heading-container {
+  display: flex;
+  justify-content: center;
+}
+
 .questionnaire-form-heading {
-  text-align: center;
   color: #4a6f70;
   font-size: 26px;
+  width: 630px;
 }
 
 .questionnaire-form .form-item-title {

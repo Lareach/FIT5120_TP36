@@ -132,6 +132,8 @@ body a:hover {
 .nav-link {
     color: #333;
     transition: color 0.2s ease-in-out;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /*banner section*/
@@ -361,7 +363,6 @@ img {
 
 /*big button for the banner*/
 .btn.btn-outline-dark-big {
-    width: 54%;
     min-width: 200px;
     margin-top: 5%;
     font-size: 20px;
@@ -579,6 +580,20 @@ img {
     border: solid 8px;
     border-color: #3f7484;
     background-color: rgb(90 130 131 / 25%);
+}
+
+.climate-change-text {
+    align-content: center;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+@media (max-width: 768px){
+    .climate-change-text {
+        width: 100%;
+    }
 }
 
 @media (max-width: 1200px){
