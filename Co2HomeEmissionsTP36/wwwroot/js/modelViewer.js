@@ -1,36 +1,23 @@
 ﻿window.addEventListener('DOMContentLoaded', function () {
+    var nodeData = window.nodeData;
+
     var canvas = document.getElementById("renderCanvas");
     var engine = new BABYLON.Engine(canvas, true);
 
-    canvas.addEventListener("wheel", function(event) {
-        event.preventDefault();
-    });
+    // Defining initial camera parameters
+    var initialAlpha = Math.PI / 4; // Initial horizontal rotation
+    var initialBeta = Math.PI / 4; // Initial vertical rotation
+    var initialRadius = 10; // Initial zoom level
+    var initialTarget = BABYLON.Vector3.Zero(); // Camera looking at the origin
 
-    var scene = createScene();
+    var scene = createScene(); // This now uses initial camera settings
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
     var nodeGroups = {
-        "solarPanels": ["node12045", "node12048", "node12051", "node12054", "node12057", "node12060", "node12063", "node12066"],
-            "outdoorlighting": ["node12115", "node12074", "node12080", "node12086", "node12092", "node12098", "node12104",],
-            "heatwaterPump": ["node3679"]
-    };
-
-    var nodeData = {
-        "solarPanels": {
-            title: "Solar Panels",
-            description: "Installing a solar electricity system in Victoria offers several financial benefits, including rebates for solar photovoltaic (PV) systems, hot water systems, solar batteries and interest-free loans. Proper planning and installation, guided by resources like the ‘Buyers Guide developed with Renew’, are crucial for maximising energy and cost savings. Considerations include system size, component quality, and choosing a reputable installer. Rebates enhance affordability, and understanding grid connection is important for effective system integration. Warranties and consumer protections provide additional security and confidence in the investment. Learn more>> https://www.solar.vic.gov.au/solar-panel-rebate",
-            imageUrl: "https://example.com/image_solar_panels.jpg"
-        },
-        "outdoorlighting": {
-            title: "Outdoor Lighting",
-            description: "Switching to solar lighting in Australia is highly beneficial for environmental and economic reasons. Solar lights are a sustainable choice, reducing carbon footprints and electricity costs. They're easy to install, require minimal maintenance, and can be used in various locations, including remote areas without power grids. Additionally, solar lights are safe, enhance property security  and support wildlife.",
-            imageUrl: "https://example.com/image_outdoor_lighting.jpg"
-        },
-        "heatwaterPump": {
-            title: "Heat Water Pump",
-            description: "Heat-pump water heaters extract heat from the surrounding air to heat water, using about 60-75% less electricity than conventional electric heaters.They function like reverse- cycle air conditioners, using electricity for the heat pump, not for directly heating water. Available as integrated units or split systems.They require proper ventilation and consideration for noise, especially near bedrooms. Suitable for off - peak electricity tariffs, these systems can also utilise timers to align with solar photovoltaic systems for efficient energy use. Eligible for government rebates in some regions, they are efficient in warmer climates but may have slower reheat rates in cold weather.",
-            imageUrl: "https://example.com/image_outdoor_lighting.jpg"
-        }
+        "solarPanels": ["node11861"],
+        "outdoorlighting": ["node11883"],
+        "evcharger": ["node11869"],
+        "heatwaterPump": ["node10467"]
     };
 
     var selectedNode = null; // Track the currently selected node
@@ -41,7 +28,7 @@
         var pickResult = scene.pick(scene.pointerX, scene.pointerY);
         if (pickResult.hit && pickResult.pickedMesh.parent) {
             var pickedNode = pickResult.pickedMesh.parent;
-            if (pickedNode instanceof BABYLON.TransformNode && isNodeClickable(pickedNode.name)) {
+            if (pickedNode instanceof BABYLON.TransformNode && Object.keys(nodeGroups).some(group => nodeGroups[group].includes(pickedNode.name))) {
                 if (selectedNode === pickedNode) {
                     return; // Do nothing if the same node is clicked again
                 }
@@ -53,18 +40,44 @@
                 // Find which group the node belongs to and display the corresponding information
                 const groupName = findGroupName(pickedNode.name);
                 const data = nodeData[groupName];
-                document.getElementById("infoTitle").textContent = data.title;
-                document.getElementById("infoDescription").textContent = data.description;
+                document.getElementById("infoTitle").innerHTML = data.title;
+                document.getElementById("infoDescription").innerHTML = data.description;
 
-                selectedNode = pickedNode;
+                selectedNode = pickedNode; // Update the selected node
             }
         } else {
             if (selectedNode) {
                 resetNode(selectedNode);
                 selectedNode = null;
+                if (guiLabel) {
+                    guiLabel.dispose(); // Hide label when clicking outside
+                    guiLabel = null;
+                }
             }
         }
     });
+
+    // Add a GUI button to reset the camera
+    var resetCameraButton = BABYLON.GUI.Button.CreateSimpleButton("resetCamera", "Reset Camera");
+    resetCameraButton.width = "150px";
+    resetCameraButton.height = "40px";
+    resetCameraButton.color = "white";
+    resetCameraButton.cornerRadius = 20;
+    resetCameraButton.background = "green";
+    resetCameraButton.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    resetCameraButton.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    resetCameraButton.onPointerUpObservable.add(function () {
+        scene.activeCamera.alpha = initialAlpha;
+        scene.activeCamera.beta = initialBeta;
+        scene.activeCamera.radius = initialRadius;
+        scene.activeCamera.setTarget(initialTarget);
+    });
+    advancedTexture.addControl(resetCameraButton);
+
+    // Disable default mouse wheel behavior for the canvas
+    canvas.addEventListener("wheel", function (event) {
+        event.preventDefault();
+    }, { passive: false });
 
     function isNodeClickable(nodeName) {
         return Object.values(nodeGroups).some(group => group.includes(nodeName));
@@ -98,18 +111,19 @@
         originalMaterials.clear();
         if (guiLabel) {
             guiLabel.dispose(); // Dispose the GUI label
+            guiLabel = null;
         }
     }
 
     function createScene() {
         var scene = new BABYLON.Scene(engine);
-        var camera = new BABYLON.ArcRotateCamera("camera1", Math.PI / 4, Math.PI / 4, 10, BABYLON.Vector3.Zero(), scene);
+        var camera = new BABYLON.ArcRotateCamera("camera1", initialAlpha, initialBeta, initialRadius, initialTarget, scene);
         camera.attachControl(canvas, true);
         var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
 
         scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
+        BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse5.glb", scene, function (newMeshes, particleSystems, skeletons) {
 
-        BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse3.glb", scene, function (newMeshes, particleSystems, skeletons) {
             if (newMeshes.length > 0) {
                 camera.target = newMeshes[0];
                 newMeshes.forEach(mesh => {
