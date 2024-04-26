@@ -123,6 +123,7 @@
 
         scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
         BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse5.glb", scene, function (newMeshes, particleSystems, skeletons) {
+
             if (newMeshes.length > 0) {
                 camera.target = newMeshes[0];
                 newMeshes.forEach(mesh => {
