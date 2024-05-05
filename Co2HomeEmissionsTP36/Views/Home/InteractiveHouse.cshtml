@@ -2,19 +2,88 @@
     ViewBag.Title = "Interactive House";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
 
-    <!-- Title -->
+<style>
+
+    body {
+        /*background: linear-gradient(white 60%, black 100%); /* Gradient from white to black starting from 50% */
+        /*margin: 0; /* Remove default margin */
+        /*overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    #modelLoadingScreen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        display: none; /* Initially hidden */
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 20px;
+        z-index: 1500;
+    }
+
+    .model-container {
+        position: relative;
+        width: 100%;
+        height: 600px;
+    }
+
+    #loadingScreen {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: flex-end; /* Align button to the right */
+        align-items: center; /* Center button vertically */
+        background: url('https://Lareach.github.io/publicfiles/door-loadingscreen.jpg') center center no-repeat;
+        background-size: cover;
+        z-index: 1000;
+        padding-right: 10%; /* Padding from the right edge */
+    }
+
+    #enterTourButton {
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #303030;
+        border-color: white;
+        border-radius: 40px;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        transition-duration: 0.4s;
+    }
+
+        #enterTourButton:hover {
+            background-color: white;
+            color: #303030;
+            border-radius: 40px;
+        }
+</style>
+
+<div class="container">
     <div class="row" style="justify-content:space-between">
         <div class="col-md-9" style="align-content: center">
-            <canvas id="renderCanvas" touch-action="none" style="width: 100%; height: 100vh;"></canvas>
+            <div class="model-container">
+                <div id="loadingScreen">
+                    <button id="enterTourButton">Enter Tour</button>
+                </div>
+                <div id="modelLoadingScreen">Loading the model, please wait...</div>
+                <canvas id="renderCanvas" touch-action="none" style="width: 100%; height: 100%;"></canvas>
+            </div>
         </div>
-
         <div class="col-md-3" style="align-content: center">
-            <div id="detailsContainer" style="overflow-y: auto; max-height: 100vh; width: 100%">
-                <h3 id="infoTitle"> Get Started </h3>
+            <div id="detailsContainer" style="overflow-y: auto; max-height: 600px; width: 100%">
+                <h3 id="infoTitle">Get Started</h3>
                 <img id="infoImage" src="" alt="Node Image" style="width: 100%; display: none;">
-                <p id="infoDescription"> Left click within the model and drag to navigate around. Click on Energy Saving Components to get more information. Use 2 fingers to pinch inwards/outwards to zoom in/out. When lost, press Reset Camera.</p>
+                <p id="infoDescription">Left click within the model and drag to navigate around. Click on Energy Saving Components to get more information. Use 2 fingers to pinch inwards/outwards to zoom in/out. When lost, press Reset Camera.</p>
             </div>
         </div>
     </div>

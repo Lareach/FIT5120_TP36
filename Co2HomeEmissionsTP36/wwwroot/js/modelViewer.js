@@ -1,86 +1,167 @@
-﻿window.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
+    // This ensures the entire DOM is fully loaded before accessing elements.
+    var enterTourButton = document.getElementById("enterTourButton");
+    if (enterTourButton) {
+        enterTourButton.addEventListener("click", function () {
+            document.getElementById("loadingScreen").style.display = "none";
+            initBabylonScene();
+        });
+    } else {
+        console.error("The 'Enter Tour' button was not found on the page.");
+    }
+});
+
+function initBabylonScene() {
+
     var nodeData = window.nodeData;
 
     var canvas = document.getElementById("renderCanvas");
     var engine = new BABYLON.Engine(canvas, true);
 
-    // Defining initial camera parameters
-    var initialAlpha = Math.PI / 4; // Initial horizontal rotation
-    var initialBeta = Math.PI / 4; // Initial vertical rotation
-    var initialRadius = 10; // Initial zoom level
-    var initialTarget = BABYLON.Vector3.Zero(); // Camera looking at the origin
+    // Create scene and define initial camera parameters
+    var scene = new BABYLON.Scene(engine);
 
-    var scene = createScene(); // This now uses initial camera settings
+    // Show the loading screen until everything is ready
+    var loadingScreenDiv = document.getElementById("modelLoadingScreen");
+    loadingScreenDiv.style.display = "flex";
+
+    // Create a universal hemispheric light that should affect all objects equally
+    var light = new BABYLON.HemisphericLight("hemiLight", new BABYLON.Vector3(0, 1, 0), scene);
+    light.intensity = 0.7;
+
+    //external camera variables
+    var initialAlphaExt = Math.PI / 3;
+    var initialBetaExt = Math.PI / 2.2;
+    var initialRadiusExt = 18;
+    var initialTargetExt = new BABYLON.Vector3.Zero();
+
+    //internal camera variables
+    var initialAlphaInt = 2 * Math.PI / 4;
+    var initialBetaInt = Math.PI / 2.2;
+    var initialRadiusInt = 10;
+    var initialTargetInt = new BABYLON.Vector3(1, 0, -11.5);
+
+
+    var externalCamera = new BABYLON.ArcRotateCamera("externalCamera", initialAlphaExt, initialBetaExt, initialRadiusExt, initialTargetExt, scene);
+    externalCamera.lowerRadiusLimit = 13; //how small you can zoom
+    externalCamera.upperRadiusLimit = 18; //how far you can zoom
+    externalCamera.lowerBetaLimit = 0.5; //how high is the vertical range of the camera (aim to not go through roof)
+    externalCamera.upperBetaLimit = Math.PI / 2.2; //how low is the vertical range of the camera (aim to not go under flooring)
+    externalCamera.lowerAlphaLimit = -Math.PI / 10; //min horiontal width of the camera (how far left)
+    externalCamera.upperAlphaLimit = 1.2 * Math.PI; //max horiontal width of the camera (how far right)
+    externalCamera.attachControl(canvas, true); // Do not attach control initially
+
+    var interiorCamera = new BABYLON.ArcRotateCamera("interiorCamera", initialAlphaInt, initialBetaInt, initialRadiusInt, initialTargetInt, scene);
+    interiorCamera.lowerRadiusLimit = 7; //how small you can zoom
+    interiorCamera.upperRadiusLimit = 10; //how far you can zoom
+    interiorCamera.lowerBetaLimit = 1; //how high is the vertical range of the camera (aim to not go through roof)
+    interiorCamera.upperBetaLimit = Math.PI / 2.2; //how low is the vertical range of the camera (aim to not go under flooring)
+    interiorCamera.lowerAlphaLimit = Math.PI / 2.8; //min horiontal width of the camera (how far left)
+    interiorCamera.upperAlphaLimit = 2.2 * Math.PI / 4; //max horiontal width of the camera (how far right)
+    //interiorCamera.lowerRadiusLimit = interiorCamera.upperRadiusLimit = 10; // Disable zoom for the interior camera
+    interiorCamera.attachControl(canvas, false); // Do not attach control initially
+
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
     var nodeGroups = {
-        "solarPanels": ["node11861"],
-        "outdoorlighting": ["node11883"],
-        "evcharger": ["node11869"],
-        "heatwaterPump": ["node10467"]
+        "solarPanels": ["node40649", "node41815"],
+        "outdoorlighting": ["node40667", "node41835"],
+        "evcharger": ["node40655", "node41821"],
+        "heatwaterPump": ["node40661", "node7019"]
     };
 
     var selectedNode = null; // Track the currently selected node
     var originalMaterials = new Map(); // To store original materials
     var guiLabel = null; // GUI label for the selected node
 
-    canvas.addEventListener('pointerdown', function (evt) {
-        var pickResult = scene.pick(scene.pointerX, scene.pointerY);
-        if (pickResult.hit && pickResult.pickedMesh.parent) {
-            var pickedNode = pickResult.pickedMesh.parent;
-            if (pickedNode instanceof BABYLON.TransformNode && Object.keys(nodeGroups).some(group => nodeGroups[group].includes(pickedNode.name))) {
-                if (selectedNode === pickedNode) {
-                    return; // Do nothing if the same node is clicked again
-                }
-                if (selectedNode) {
-                    resetNode(selectedNode); // Reset the previously selected node
-                }
-                highlightNode(pickedNode); // Highlight the new selected node
+    // Add UI button to switch to external view
+    var buttonExternal = BABYLON.GUI.Button.CreateSimpleButton("butExternal", "External View");
+    buttonExternal.width = "150px";
+    buttonExternal.height = "40px";
+    buttonExternal.color = "white";
+    buttonExternal.background = "black";
+    buttonExternal.cornerRadius = 20;  // Set the corner radius for rounded edges
+    buttonExternal.thickness = 0;      // Set the thickness of the border (optional)
+    buttonExternal.top = "-10px";      // Adjust vertical position from the bottom
+    buttonExternal.left = "-10px";     // Adjust horizontal position from the right
+    buttonExternal.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    buttonExternal.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    buttonExternal.onPointerUpObservable.add(function () {
+        switchCamera(externalCamera);
+        resetCameraToInitial(externalCamera, initialAlphaExt, initialBetaExt, initialRadiusExt, initialTargetExt);
+    });
+    advancedTexture.addControl(buttonExternal);
 
-                // Find which group the node belongs to and display the corresponding information
-                const groupName = findGroupName(pickedNode.name);
-                const data = nodeData[groupName];
-                document.getElementById("infoTitle").innerHTML = data.title;
-                document.getElementById("infoDescription").innerHTML = data.description;
+    // Add UI button to switch to interior view
+    var buttonInterior = BABYLON.GUI.Button.CreateSimpleButton("butInterior", "Interior View");
+    buttonInterior.width = "150px";
+    buttonInterior.height = "40px";
+    buttonInterior.color = "white";
+    buttonInterior.background = "black";
+    buttonInterior.cornerRadius = 20;  // Set the corner radius for rounded edges
+    buttonInterior.thickness = 0;      // Set the thickness of the border (optional)
+    buttonInterior.top = "-60px";      // Adjust vertical position so it doesn't overlap the external button
+    buttonInterior.left = "-10px";     // Adjust horizontal position from the right
+    buttonInterior.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    buttonInterior.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    buttonInterior.onPointerUpObservable.add(function () {
+        switchCamera(interiorCamera);
+        resetCameraToInitial(interiorCamera, initialAlphaInt, initialBetaInt, initialRadiusInt, initialTargetInt);
+    });
+    advancedTexture.addControl(buttonInterior);
 
-                selectedNode = pickedNode; // Update the selected node
-            }
-        } else {
-            if (selectedNode) {
-                resetNode(selectedNode);
-                selectedNode = null;
-                if (guiLabel) {
-                    guiLabel.dispose(); // Hide label when clicking outside
-                    guiLabel = null;
-                }
-            }
-        }
+    scene.clearColor = new BABYLON.Color4(0, 0, 0, 0); // Ensure the background is transparent
+    scene.activeCamera = externalCamera; // Set external camera as the active camera initially
+
+    var material = new BABYLON.StandardMaterial("backgroundMaterial", scene);
+    material.diffuseColor = new BABYLON.Color3(1, 1, 1); // Ensure maximum brightness
+    material.diffuseTexture = backgroundTexture;
+
+    // Background texture
+    var backgroundTexture = new BABYLON.Texture("https://Lareach.github.io/publicfiles/back1.jpg", scene);
+    backgroundTexture.level = 2;
+    var sizes = { width: 200, height: 500 };
+
+    // Positions and rotations for each plane
+    var positions = [
+        { position: new BABYLON.Vector3(0, 150, -100), rotation: new BABYLON.Vector3(0, 0, 0) }, // Back
+        { position: new BABYLON.Vector3(0, 150, 100), rotation: new BABYLON.Vector3(0, Math.PI, 0) }, // Front
+        { position: new BABYLON.Vector3(-100, 150, 0), rotation: new BABYLON.Vector3(0, Math.PI / 2, 0) }, // Left
+        { position: new BABYLON.Vector3(100, 150, 0), rotation: new BABYLON.Vector3(0, -Math.PI / 2, 0) }  // Right
+    ];
+
+    positions.forEach(function (pos) {
+        var plane = BABYLON.MeshBuilder.CreatePlane("backgroundPlane", sizes, scene);
+        plane.position = pos.position;
+        plane.rotation = pos.rotation;
+        var material = new BABYLON.StandardMaterial("backgroundMaterial", scene);
+        material.diffuseTexture = backgroundTexture;
+        material.backFaceCulling = false; // Ensure texture is visible from both sides
+        plane.material = material;
+        plane.isPickable = false; // Ensure the plane does not interfere with raycasting
     });
 
-    // Add a GUI button to reset the camera
-    var resetCameraButton = BABYLON.GUI.Button.CreateSimpleButton("resetCamera", "Reset Camera");
-    resetCameraButton.width = "150px";
-    resetCameraButton.height = "40px";
-    resetCameraButton.color = "white";
-    resetCameraButton.cornerRadius = 20;
-    resetCameraButton.background = "green";
-    resetCameraButton.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-    resetCameraButton.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-    resetCameraButton.onPointerUpObservable.add(function () {
-        scene.activeCamera.alpha = initialAlpha;
-        scene.activeCamera.beta = initialBeta;
-        scene.activeCamera.radius = initialRadius;
-        scene.activeCamera.setTarget(initialTarget);
-    });
-    advancedTexture.addControl(resetCameraButton);
+    // Function to handle camera switch
+    function switchCamera(camera) {
+        scene.activeCamera.detachControl(canvas);
+        scene.activeCamera = camera;
+        camera.attachControl(canvas, true);
 
-    // Disable default mouse wheel behavior for the canvas
-    canvas.addEventListener("wheel", function (event) {
-        event.preventDefault();
-    }, { passive: false });
+        // Reinforce stopping the wheel event from scrolling the page
+        canvas.addEventListener('wheel', function (event) {
+            event.preventDefault();
+        }, { passive: false });
+    }
 
-    function isNodeClickable(nodeName) {
-        return Object.values(nodeGroups).some(group => group.includes(nodeName));
+    // Function to reset camera to its initial position
+    function resetCameraToInitial(camera, alpha, beta, radius, target) {
+        scene.activeCamera.detachControl(canvas);
+        camera.alpha = alpha;
+        camera.beta = beta;
+        camera.radius = radius;
+        camera.setTarget(target);
+        scene.activeCamera = camera;
+        camera.attachControl(canvas, true);
     }
 
     function findGroupName(nodeName) {
@@ -115,30 +196,71 @@
         }
     }
 
-    function createScene() {
-        var scene = new BABYLON.Scene(engine);
-        var camera = new BABYLON.ArcRotateCamera("camera1", initialAlpha, initialBeta, initialRadius, initialTarget, scene);
-        camera.attachControl(canvas, true);
-        var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
+    canvas.addEventListener('pointerdown', function (evt) {
+        var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+        if (pickResult.hit) {
+            // Check if the picked mesh's parent is a transform node and is one of the clickable nodes
+            if (pickResult.pickedMesh.parent
+                && pickResult.pickedMesh.parent instanceof BABYLON.TransformNode
+                && Object.keys(nodeGroups).some(group => nodeGroups[group].includes(pickResult.pickedMesh.parent.name))) {
 
-        scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
-        BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse5.glb", scene, function (newMeshes, particleSystems, skeletons) {
-
-            if (newMeshes.length > 0) {
-                camera.target = newMeshes[0];
-                newMeshes.forEach(mesh => {
-                    if (!mesh.parent) {
-                        let transformNode = new BABYLON.TransformNode("Node_" + mesh.name, scene);
-                        mesh.parent = transformNode;
-                    }
-                });
+                var pickedNode = pickResult.pickedMesh.parent;
+                if (selectedNode === pickedNode) {
+                    // Do nothing if the same node is clicked again
+                    return;
+                }
+                if (selectedNode) {
+                    // Reset the previously selected node
+                    resetNode(selectedNode);
+                }
+                // Highlight the new selected node
+                highlightNode(pickedNode);
+                // Find which group the node belongs to and display the corresponding information
+                const groupName = findGroupName(pickedNode.name);
+                const data = nodeData[groupName];
+                document.getElementById("infoTitle").innerHTML = data.title;
+                document.getElementById("infoDescription").innerHTML = data.description;
+                selectedNode = pickedNode; // Update the selected node
             } else {
-                console.error('No meshes were loaded. Check if the file path is correct and the model file is not corrupt.');
+                // If clicked outside a clickable node, reset the current selected node
+                if (selectedNode) {
+                    resetNode(selectedNode);
+                    selectedNode = null;
+                    if (guiLabel) {
+                        guiLabel.dispose();
+                        guiLabel = null;
+                    }
+                }
             }
-        });
+        } else {
+            // Clicked outside any mesh, reset the current selected node
+            if (selectedNode) {
+                resetNode(selectedNode);
+                selectedNode = null;
+                if (guiLabel) {
+                    guiLabel.dispose(); // Hide label when clicking outside
+                    guiLabel = null;
+                }
+            }
+        }
+    });
 
-        return scene;
-    }
+    BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse12.glb", scene, function (newMeshes, particleSystems, skeletons) {
+        if (newMeshes.length > 0) {
+            scene.activeCamera.target = newMeshes[0];
+            newMeshes.forEach(mesh => {
+                if (!mesh.parent) {
+                    let transformNode = new BABYLON.TransformNode("Node_" + mesh.name, scene);
+                    mesh.parent = transformNode;
+                }
+            });
+        } else {
+            console.error('No meshes were loaded. Check if the file path is correct and the model file is not corrupt.');
+        }
+
+        // Hide the loading screen when the scene is fully loaded
+        loadingScreenDiv.style.display = "none";
+    });
 
     engine.runRenderLoop(function () {
         scene.render();
@@ -147,4 +269,4 @@
     window.addEventListener('resize', function () {
         engine.resize();
     });
-});
+}
