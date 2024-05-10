@@ -1,13 +1,13 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
     // This ensures the entire DOM is fully loaded before accessing elements.
-    var enterTourButton = document.getElementById("enterTourButton");
-    if (enterTourButton) {
+    if(document.getElementById('enterTourButton') !== null)
+    {
+        var enterTourButton = document.getElementById("enterTourButton");
+
         enterTourButton.addEventListener("click", function () {
             document.getElementById("loadingScreen").style.display = "none";
             initBabylonScene();
         });
-    } else {
-        console.error("The 'Enter Tour' button was not found on the page.");
     }
 });
 
