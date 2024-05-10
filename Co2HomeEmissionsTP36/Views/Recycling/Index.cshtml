@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Recycling";
+}
+
+@model Dictionary<string, string>
+
+<form id="image-uploader" class="image-upload-form" method="post" enctype="multipart/form-data">
+    <input type="file" id="image-upload" class="image-upload" name="imageFile" accept=".jpg, .jpeg, .png">
+    <div class="upload-form-submit">
+        <button class="upload-form-button" type="submit">
+            Upload
+        </button>
+    </div>
+</form>
+
+<pre>
+    @if(Model != null) {
+        @foreach (var pair in Model)
+        { 
+            <span>@pair.Key</span> 
+            <span>@pair.Value</span>
+        }
+    }
+</pre>
