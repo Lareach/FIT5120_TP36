@@ -1,9 +1,8 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     // This ensures the entire DOM is fully loaded before accessing elements.
     if(document.getElementById('enterTourButton') !== null)
     {
         var enterTourButton = document.getElementById("enterTourButton");
-
         enterTourButton.addEventListener("click", function () {
             document.getElementById("loadingScreen").style.display = "none";
             initBabylonScene();
@@ -52,22 +51,28 @@ function initBabylonScene() {
     externalCamera.attachControl(canvas, true); // Do not attach control initially
 
     var interiorCamera = new BABYLON.ArcRotateCamera("interiorCamera", initialAlphaInt, initialBetaInt, initialRadiusInt, initialTargetInt, scene);
-    interiorCamera.lowerRadiusLimit = 7; //how small you can zoom
+    interiorCamera.lowerRadiusLimit = 7.8; //how small you can zoom
     interiorCamera.upperRadiusLimit = 10; //how far you can zoom
     interiorCamera.lowerBetaLimit = 1; //how high is the vertical range of the camera (aim to not go through roof)
     interiorCamera.upperBetaLimit = Math.PI / 2.2; //how low is the vertical range of the camera (aim to not go under flooring)
-    interiorCamera.lowerAlphaLimit = Math.PI / 2.8; //min horiontal width of the camera (how far left)
-    interiorCamera.upperAlphaLimit = 2.2 * Math.PI / 4; //max horiontal width of the camera (how far right)
+    interiorCamera.lowerAlphaLimit = Math.PI / 2.6; //min horiontal width of the camera (how far left)
+    interiorCamera.upperAlphaLimit = 2.1 * Math.PI / 4; //max horiontal width of the camera (how far right)
     //interiorCamera.lowerRadiusLimit = interiorCamera.upperRadiusLimit = 10; // Disable zoom for the interior camera
     interiorCamera.attachControl(canvas, false); // Do not attach control initially
 
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
     var nodeGroups = {
-        "solarPanels": ["node40649", "node41815"],
-        "outdoorlighting": ["node40667", "node41835"],
-        "evcharger": ["node40655", "node41821"],
-        "heatwaterPump": ["node40661", "node7019"]
+        "solarPanels": ["node41", "node108"],
+        "outdoorlighting": ["node56", "node125"],
+        "evcharger": ["node46", "node111"],
+        "heatwaterPump": ["node51", "node2"],
+        "windowcoverings": ["node81", "node67"],
+        "lightfixtures": ["node71", "node128"],
+        "airleakage": ["node91", "node141"],
+        "thermostats": ["node76", "node61"],
+        "kitchenappliances": ["node86", "node105", "node135", "node143", "node150"],
+        "recyclablematerials": ["node100", "node96"]
     };
 
     var selectedNode = null; // Track the currently selected node
@@ -78,14 +83,23 @@ function initBabylonScene() {
     var buttonExternal = BABYLON.GUI.Button.CreateSimpleButton("butExternal", "External View");
     buttonExternal.width = "150px";
     buttonExternal.height = "40px";
-    buttonExternal.color = "white";
-    buttonExternal.background = "black";
+    buttonExternal.color = "white"; // Default text color
+    buttonExternal.background = "black"; // Default background color
     buttonExternal.cornerRadius = 20;  // Set the corner radius for rounded edges
     buttonExternal.thickness = 0;      // Set the thickness of the border (optional)
     buttonExternal.top = "-10px";      // Adjust vertical position from the bottom
     buttonExternal.left = "-10px";     // Adjust horizontal position from the right
     buttonExternal.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     buttonExternal.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    buttonExternal.zIndex = 10; // Ensure it's on top
+    buttonExternal.onPointerEnterObservable.add(function () {
+        buttonExternal.background = "lightgrey"; // Change background to light grey when hovered
+        buttonExternal.color = "black"; // Change text color to black when hovered
+    });
+    buttonExternal.onPointerOutObservable.add(function () {
+        buttonExternal.background = "black"; // Change background back to black
+        buttonExternal.color = "white"; // Change text color back to white
+    });
     buttonExternal.onPointerUpObservable.add(function () {
         switchCamera(externalCamera);
         resetCameraToInitial(externalCamera, initialAlphaExt, initialBetaExt, initialRadiusExt, initialTargetExt);
@@ -96,19 +110,46 @@ function initBabylonScene() {
     var buttonInterior = BABYLON.GUI.Button.CreateSimpleButton("butInterior", "Interior View");
     buttonInterior.width = "150px";
     buttonInterior.height = "40px";
-    buttonInterior.color = "white";
-    buttonInterior.background = "black";
+    buttonInterior.color = "white"; // Default text color
+    buttonInterior.background = "black"; // Default background color
     buttonInterior.cornerRadius = 20;  // Set the corner radius for rounded edges
     buttonInterior.thickness = 0;      // Set the thickness of the border (optional)
     buttonInterior.top = "-60px";      // Adjust vertical position so it doesn't overlap the external button
     buttonInterior.left = "-10px";     // Adjust horizontal position from the right
     buttonInterior.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
     buttonInterior.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    buttonInterior.zIndex = 10; // Ensure it's on top
+    buttonInterior.onPointerEnterObservable.add(function () {
+        buttonInterior.background = "lightgrey"; // Change background to light grey when hovered
+        buttonInterior.color = "black"; // Change text color to black when hovered
+    });
+    buttonInterior.onPointerOutObservable.add(function () {
+        buttonInterior.background = "black"; // Change background back to black
+        buttonInterior.color = "white"; // Change text color back to white
+    });
     buttonInterior.onPointerUpObservable.add(function () {
         switchCamera(interiorCamera);
         resetCameraToInitial(interiorCamera, initialAlphaInt, initialBetaInt, initialRadiusInt, initialTargetInt);
     });
     advancedTexture.addControl(buttonInterior);
+
+    // This set will store the names of clicked node groups
+    var clickedGroups = new Set();
+
+    // GUI label to display the count
+    var countLabel = new BABYLON.GUI.TextBlock();
+    countLabel.text = "0/10 components found";
+    countLabel.color = "white";
+    countLabel.fontSize = 24;
+    countLabel.outlineWidth = 2;
+    countLabel.outlineColor = "black";
+    countLabel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    countLabel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    countLabel.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    countLabel.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    countLabel.paddingRight = "10px";
+    countLabel.paddingTop = "10px";
+    advancedTexture.addControl(countLabel);
 
     scene.clearColor = new BABYLON.Color4(0, 0, 0, 0); // Ensure the background is transparent
     scene.activeCamera = externalCamera; // Set external camera as the active camera initially
@@ -172,24 +213,44 @@ function initBabylonScene() {
         }
         return null; // Return null if no group is found
     }
+  
+    function highlightNode(groupName) {
+        var nodes = nodeGroups[groupName];
+        if (nodes) {
+            nodes.forEach(nodeName => {
+                var node = scene.getTransformNodeByName(nodeName);
+                if (node && !originalMaterials.has(node)) {
+                    node.getChildMeshes().forEach(mesh => {
+                        originalMaterials.set(mesh, mesh.material);
+                        mesh.material = mesh.material.clone("clonedMaterial_" + mesh.name);
 
-    function highlightNode(node) {
-        node.getChildMeshes().forEach(mesh => {
-            if (mesh.material && !originalMaterials.has(mesh)) {
-                originalMaterials.set(mesh, mesh.material);
-                mesh.material = mesh.material.clone("clonedMaterial_" + mesh.name);
-                mesh.material.emissiveColor = new BABYLON.Color3(1, 0.5, 0);
-            }
-        });
+                        // Check if the node is one of the specified nodes and change color to orange
+                        if (["node41", "node56", "node46", "node51", "node81", "node71", "node91", "node76", "node86", "node100"].includes(nodeName)) {
+                            mesh.material.emissiveColor = new BABYLON.Color3(1, 1, 1); // Red
+                        } else {
+                            mesh.material.emissiveColor = new BABYLON.Color3(1, 0.5, 0); // Default color, adjust as necessary
+                        }
+                    });
+                }
+            });
+        }
     }
 
-    function resetNode(node) {
-        node.getChildMeshes().forEach(mesh => {
-            if (originalMaterials.has(mesh)) {
-                mesh.material = originalMaterials.get(mesh);
-            }
-        });
-        originalMaterials.clear();
+    function resetNode(groupName) {
+        var nodes = nodeGroups[groupName];
+        if (nodes) {
+            nodes.forEach(nodeName => {
+                var node = scene.getTransformNodeByName(nodeName);
+                if (node) {
+                    node.getChildMeshes().forEach(mesh => {
+                        if (originalMaterials.has(mesh)) {
+                            mesh.material = originalMaterials.get(mesh);
+                            originalMaterials.delete(mesh);
+                        }
+                    });
+                }
+            });
+        }
         if (guiLabel) {
             guiLabel.dispose(); // Dispose the GUI label
             guiLabel = null;
@@ -199,53 +260,53 @@ function initBabylonScene() {
     canvas.addEventListener('pointerdown', function (evt) {
         var pickResult = scene.pick(scene.pointerX, scene.pointerY);
         if (pickResult.hit) {
-            // Check if the picked mesh's parent is a transform node and is one of the clickable nodes
-            if (pickResult.pickedMesh.parent
-                && pickResult.pickedMesh.parent instanceof BABYLON.TransformNode
-                && Object.keys(nodeGroups).some(group => nodeGroups[group].includes(pickResult.pickedMesh.parent.name))) {
-
-                var pickedNode = pickResult.pickedMesh.parent;
-                if (selectedNode === pickedNode) {
-                    // Do nothing if the same node is clicked again
-                    return;
-                }
-                if (selectedNode) {
-                    // Reset the previously selected node
-                    resetNode(selectedNode);
-                }
-                // Highlight the new selected node
-                highlightNode(pickedNode);
-                // Find which group the node belongs to and display the corresponding information
-                const groupName = findGroupName(pickedNode.name);
-                const data = nodeData[groupName];
-                document.getElementById("infoTitle").innerHTML = data.title;
-                document.getElementById("infoDescription").innerHTML = data.description;
-                selectedNode = pickedNode; // Update the selected node
-            } else {
-                // If clicked outside a clickable node, reset the current selected node
-                if (selectedNode) {
-                    resetNode(selectedNode);
-                    selectedNode = null;
-                    if (guiLabel) {
-                        guiLabel.dispose();
-                        guiLabel = null;
+            var pickedNode = pickResult.pickedMesh.parent;
+            if (pickedNode && pickedNode instanceof BABYLON.TransformNode) {
+                var groupName = findGroupName(pickedNode.name);
+                if (groupName) {
+                    if (!clickedGroups.has(groupName)) {
+                        clickedGroups.add(groupName);
+                        // Update the counter in the GUI
+                        countLabel.text = `${clickedGroups.size}/10 components found`;
+                        if (clickedGroups.size === 10) {
+                            countLabel.text += " - All components found!";
+                        }
+                    }
+                    if (selectedNode && findGroupName(selectedNode.name) === groupName) {
+                        return; // Do nothing if the same group is clicked again
+                    }
+                    if (selectedNode) {
+                        resetNode(findGroupName(selectedNode.name));
+                    }
+                    highlightNode(groupName);
+                    const data = nodeData[groupName];
+                    document.getElementById("infoTitle").innerHTML = data.title;
+                    document.getElementById("infoDescription").innerHTML = data.description;
+                    selectedNode = pickedNode; // Update the selected node
+                } else {
+                    if (selectedNode) {
+                        resetNode(findGroupName(selectedNode.name));
+                        selectedNode = null;
+                        if (guiLabel) {
+                            guiLabel.dispose();
+                            guiLabel = null;
+                        }
                     }
                 }
             }
         } else {
-            // Clicked outside any mesh, reset the current selected node
             if (selectedNode) {
-                resetNode(selectedNode);
+                resetNode(findGroupName(selectedNode.name));
                 selectedNode = null;
                 if (guiLabel) {
-                    guiLabel.dispose(); // Hide label when clicking outside
+                    guiLabel.dispose();
                     guiLabel = null;
                 }
             }
         }
     });
 
-    BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse12.glb", scene, function (newMeshes, particleSystems, skeletons) {
+    BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse22.glb", scene, function (newMeshes, particleSystems, skeletons) {
         if (newMeshes.length > 0) {
             scene.activeCamera.target = newMeshes[0];
             newMeshes.forEach(mesh => {
@@ -258,8 +319,11 @@ function initBabylonScene() {
             console.error('No meshes were loaded. Check if the file path is correct and the model file is not corrupt.');
         }
 
-        // Hide the loading screen when the scene is fully loaded
-        loadingScreenDiv.style.display = "none";
+        // Model is loaded, wait for an additional 4 seconds before hiding the loading screen
+        setTimeout(function () {
+            // Hide the loading screen when the scene is fully loaded and the additional time has passed
+            loadingScreenDiv.style.display = "none";
+        }, 2000); // 2000 milliseconds delay
     });
 
     engine.runRenderLoop(function () {

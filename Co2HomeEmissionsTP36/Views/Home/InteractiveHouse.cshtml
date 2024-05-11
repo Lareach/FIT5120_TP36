@@ -1,92 +1,148 @@
-﻿@{
+@{
     ViewBag.Title = "Interactive House";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
+<link href="~/css/StyleSheet.css" rel="stylesheet" />
 
-    body {
-        /*background: linear-gradient(white 60%, black 100%); /* Gradient from white to black starting from 50% */
-        /*margin: 0; /* Remove default margin */
-        /*overflow-x: hidden; /* Prevent horizontal scroll */
-    }
-
-    #modelLoadingScreen {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        display: none; /* Initially hidden */
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 20px;
-        z-index: 1500;
-    }
-
-    .model-container {
-        position: relative;
-        width: 100%;
-        height: 600px;
-    }
-
-    #loadingScreen {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: flex-end; /* Align button to the right */
-        align-items: center; /* Center button vertically */
-        background: url('https://Lareach.github.io/publicfiles/door-loadingscreen.jpg') center center no-repeat;
-        background-size: cover;
-        z-index: 1000;
-        padding-right: 10%; /* Padding from the right edge */
-    }
-
-    #enterTourButton {
-        padding: 10px 20px;
-        font-size: 20px;
-        cursor: pointer;
-        background-color: #303030;
-        border-color: white;
-        border-radius: 40px;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        transition-duration: 0.4s;
-    }
-
-        #enterTourButton:hover {
-            background-color: white;
-            color: #303030;
-            border-radius: 40px;
-        }
-</style>
+<div>
+    <div class="banner" style="height: 150px; margin-bottom: 5%;">
+        <div class="banner-content"> <p>Energy Efficient Home Tour</p> </div>
+    </div>
+</div>
 
 <div class="container">
-    <div class="row" style="justify-content:space-between">
-        <div class="col-md-9" style="align-content: center">
-            <div class="model-container">
-                <div id="loadingScreen">
-                    <button id="enterTourButton">Enter Tour</button>
+
+
+    <div class="questionnaire-result-container">
+
+        <div id="help-container">
+            <div class="accordion-container">
+                <div class="questionnaire-accordion-head">
+                    <div class="questionnaire-accordion-head-content">
+                        <div class="questionnaire-accordion-head-text">
+                            <h4>How do I navigate in the model?</h4>
+                        </div>
+                        <div class="questionnaire-accordion-head-icon accordion-rotate"></div>
+                    </div>
                 </div>
-                <div id="modelLoadingScreen">Loading the model, please wait...</div>
-                <canvas id="renderCanvas" touch-action="none" style="width: 100%; height: 100%;"></canvas>
+                <div class="questionnaire-accordion-tail accordion-close">
+                    <div class="questionnaire-accordion-tail-content">
+                        <p class="questionnaire-accordion-head-text-description">
+                            <li> Left click within the model and drag to navigate around.
+                            <li>Click on Energy Saving Components to get more information.
+                            <li>Use 2 fingers to pinch inwards/outwards to zoom in/out.
+                            <li>When lost, press Internal View or the External View Button
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-md-3" style="align-content: center">
-            <div id="detailsContainer" style="overflow-y: auto; max-height: 600px; width: 100%">
-                <h3 id="infoTitle">Get Started</h3>
-                <img id="infoImage" src="" alt="Node Image" style="width: 100%; display: none;">
-                <p id="infoDescription">Left click within the model and drag to navigate around. Click on Energy Saving Components to get more information. Use 2 fingers to pinch inwards/outwards to zoom in/out. When lost, press Reset Camera.</p>
+
+        <div class="row" style="justify-content: space-between">
+            <div class="col-12 mobile-message">
+                Current View Size not supported. Please use a desktop view to show model.
+            </div>
+            <div class="col-md-9" style="align-content: center">
+                <div class="model-container">
+                    <div id="loadingScreen">
+                        <button id="enterTourButton">Enter Tour</button>
+                    </div>
+                    <div id="modelLoadingScreen">Loading the model, please wait...</div>
+                    <canvas id="renderCanvas" touch-action="none" style="width: 100%; height: 100%;"></canvas>
+                </div>
+            </div>
+            <div class="col-md-3" style="align-content: center">
+                <div id="detailsContainer" style="overflow-y: auto; max-height: 600px; width: 100%">
+                    <h3 id="infoTitle">Get Started</h3>
+                    <img id="infoImage" src="" alt="Node Image" style="width: 100%; display: none;">
+                    <p id="infoDescription">Left click within the model and drag to navigate around. Click on Energy Saving Components to get more information. Use 2 fingers to pinch inwards/outwards to zoom in/out. When lost, press Reset Camera.</p>
+                </div>
             </div>
         </div>
+
+        <div id="help-container">
+            <!-- Help/Troubleshoot Dropdown -->
+            <h2 class="questionnaire-heading"><strong>Troubleshoot</strong></h2>
+
+            <div class="accordion-container">
+                <div class="questionnaire-accordion-head">
+                    <div class="questionnaire-accordion-head-content">
+                        <div class="questionnaire-accordion-head-text">
+                            <h4>Why am I am stuck at the loading screen?</h4>
+                        </div>
+                        <div class="questionnaire-accordion-head-icon accordion-rotate"></div>
+                    </div>
+                </div>
+                <div class="questionnaire-accordion-tail accordion-close">
+                    <div class="questionnaire-accordion-tail-content">
+                        <p class="questionnaire-accordion-head-text-description">
+                            Refresh the model by clicking on the Interactive House Tab in the navigation bar again.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-container">
+                <div class="questionnaire-accordion-head">
+                    <div class="questionnaire-accordion-head-content">
+                        <div class="questionnaire-accordion-head-text">
+                            <h4>Why can I only see white and blue?</h4>
+                        </div>
+                        <div class="questionnaire-accordion-head-icon accordion-rotate"></div>
+                    </div>
+                </div>
+                <div class="questionnaire-accordion-tail accordion-close">
+                    <div class="questionnaire-accordion-tail-content">
+                        <p class="questionnaire-accordion-head-text-description">
+                            Refresh the model by clicking on the Interactive House Tab in the navigation bar again.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-container">
+                <div class="questionnaire-accordion-head">
+                    <div class="questionnaire-accordion-head-content">
+                        <div class="questionnaire-accordion-head-text">
+                            <h4>Its not working properly?</h4>
+                        </div>
+                        <div class="questionnaire-accordion-head-icon accordion-rotate"></div>
+                    </div>
+                </div>
+                <div class="questionnaire-accordion-tail accordion-close">
+                    <div class="questionnaire-accordion-tail-content">
+                        <p class="questionnaire-accordion-head-text-description">
+                            <li> Make sure you are using a laptop or a computer.
+                            <li> Refresh the model by clicking on the Interactive House Tab in the navigation bar again.
+                            <li> It may load for a long time, when you are first opening this model.
+                            <li> Clear your browser cache and reload the model again.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+</div>
+
+<div class="home-container" style="background: #bfd6d7b0; text-align:center">
+    <br />
+    <h2 style="color: #4a6f70"><strong>Want to know more about Governmental Support?</strong></h2>
+    <br />
+    <h4 style="margin:auto; text-align:center; max-width: 800px">
+        Numerous government initiatives provide substantial incentives and financial support for residents to adopt energy-efficient home systems.
+    </h4>
+    <br />
+    <br />
+    <div style="text-align: center;">
+        <a class="btn btn-outline-dark" href="/GovernmentSupport"
+           style="width: 50%; text-align: center; box-sizing: border-box; padding: 1%; max-width:70%; justify-content:center">
+            Start your saving now »
+        </a>
+    </div>
+    <br />
 </div>
 
 <script src="~/js/modelViewer.js"></script>
