@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
     font-family: 'Segoe UI Regular';
     font-style: normal;
     font-weight: normal;
@@ -716,7 +716,6 @@ main {
         margin-right: 15px;
     }
 }
-
 
 #modelLoadingScreen {
     position: absolute;

@@ -1,4 +1,4 @@
-﻿var nodeData = {
+var nodeData = {
     "solarPanels": {
         title: "Solar Panels",
         description: "<p><strong>Money-Saving Tips:</strong></p>" +

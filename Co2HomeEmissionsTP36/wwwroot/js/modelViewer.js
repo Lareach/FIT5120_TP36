@@ -1,13 +1,12 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     // This ensures the entire DOM is fully loaded before accessing elements.
-    var enterTourButton = document.getElementById("enterTourButton");
-    if (enterTourButton) {
+    if(document.getElementById('enterTourButton') !== null)
+    {
+        var enterTourButton = document.getElementById("enterTourButton");
         enterTourButton.addEventListener("click", function () {
             document.getElementById("loadingScreen").style.display = "none";
             initBabylonScene();
         });
-    } else {
-        console.error("The 'Enter Tour' button was not found on the page.");
     }
 });
 
@@ -134,7 +133,6 @@ function initBabylonScene() {
     });
     advancedTexture.addControl(buttonInterior);
 
-
     // This set will store the names of clicked node groups
     var clickedGroups = new Set();
 
@@ -152,7 +150,6 @@ function initBabylonScene() {
     countLabel.paddingRight = "10px";
     countLabel.paddingTop = "10px";
     advancedTexture.addControl(countLabel);
-
 
     scene.clearColor = new BABYLON.Color4(0, 0, 0, 0); // Ensure the background is transparent
     scene.activeCamera = externalCamera; // Set external camera as the active camera initially
@@ -216,7 +213,7 @@ function initBabylonScene() {
         }
         return null; // Return null if no group is found
     }
-
+  
     function highlightNode(groupName) {
         var nodes = nodeGroups[groupName];
         if (nodes) {
@@ -259,7 +256,6 @@ function initBabylonScene() {
             guiLabel = null;
         }
     }
-
 
     canvas.addEventListener('pointerdown', function (evt) {
         var pickResult = scene.pick(scene.pointerX, scene.pointerY);
@@ -309,8 +305,6 @@ function initBabylonScene() {
             }
         }
     });
-
-
 
     BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse22.glb", scene, function (newMeshes, particleSystems, skeletons) {
         if (newMeshes.length > 0) {
