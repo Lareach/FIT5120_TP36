@@ -62,17 +62,50 @@
 
  <!-- 2 different containers fo Homepage and for everything else -->
  <!-- Required to do this so that banner image is spread until side ends of page -->
- <div class="@("body-container" + (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? " home-container" : ""))">
-     <main role="main" class="pb-3">
-         @RenderBody()
-     </main>
- </div>
+    <div class="home-container">
+        <main role="main" class="pb-3" style="padding-bottom: 0 !important">
+            @RenderBody()
+        </main>
+    </div>
 
- <footer class="border-top footer text-muted">
-     <div class="container">
-         &copy; 2024 - Home Emissions
-     </div>
- </footer>
+    <footer>
+        <div class="home-container" style="background: #2e4e42; border-top: 4px solid cadetblue">
+            <div class="container" style="background: #2e4e42;">
+                <div class="row gy-4" style="justify-content:space-between; margin-top: 2%; padding-right: 0; --bs-gutter-x: 0">
+                    <div class="col-lg-3">
+                        <h2 class="h5 lined mb-4"><strong>About</strong></h2>
+                        <p class="text-muted text-sm" style="color: white !important">
+                            This project aims to help users understand and manage their carbon emissions from homes.
+                            It's a part of a collaborative effort sponsored by Environment Victoria and the Department of Education Victoria.
+                        </p>
+                    </div>
+                    <div class="col-lg-5">
+                        <h2 class="h5 lined mb-4"><strong>Quick Links</strong></h2>
+                        <div class="d-flex">
+                            <ul class="list-unstyled d-inline-block me-4 mb-0">
+                                <li class="mb-2"><a href="~/Home/ClimateAction" style="color: white;">Climate Action</a></li>
+                                <li class="mb-2"><a href="~/CarbonCalculator/Index" style="color: white;">Carbon Calculator</a></li>
+                                <li class="mb-2"><a href="~/Home/GovernmentalSupport" style="color: white;">Governmental Support</a></li>
+                            </ul>
+                            <ul class="list-unstyled d-inline-block mb-0">
+                                <li class="mb-2"><a href="~/Questionnaire/Index" style="color: white;">Grants</a></li>
+                                <li class="mb-2"><a href="~/Home/InteractiveHouse" style="color: white;">Interactive House</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                    </div>
+                </div>
+            </div>
+            <div class="copyrights">
+                <div class="container text-center py-4" style="background:#2e4e42; padding: 1%; color: white">
+                    <p>© 2024 - Home Emissions</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
