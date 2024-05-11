@@ -1,24 +1,12 @@
 @{
-    ViewData["Title"] = "Recycling";
+    ViewData["Title"] = "Recycling Introduction";
 }
 
-@model Dictionary<string, string>
-
-<form id="image-uploader" class="image-upload-form" method="post" enctype="multipart/form-data">
-    <input type="file" id="image-upload" class="image-upload" name="imageFile" accept=".jpg, .jpeg, .png">
-    <div class="upload-form-submit">
-        <button class="upload-form-button" type="submit">
-            Upload
-        </button>
+<div id="recycling-intro">
+    <h2 class="recycling-intro-heading">Is this recyclable? Use AI to find out.</h2>
+    <p>Just upload your image, and our AI will predict if an item is recyclable - in just seconds.</p>
+    <div class="recycling-intro-action">
+        <img src="/images/recycling-identifier.jpg" alt="" />
+        <a href="/Recycling/Classify" class="btn btn-primary" id="recycling-intro-button" draggable="false">Get started</a>
     </div>
-</form>
-
-<pre>
-    @if(Model != null) {
-        @foreach (var pair in Model)
-        { 
-            <span>@pair.Key</span> 
-            <span>@pair.Value</span>
-        }
-    }
-</pre>
+</div>

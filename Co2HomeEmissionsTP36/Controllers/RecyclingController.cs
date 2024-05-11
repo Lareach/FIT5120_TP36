@@ -2,29 +2,39 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using System.Diagnostics;
 
 namespace Co2HomeEmissionsTP36.Controllers;
 
 public class RecyclingController : Controller
 {
-    //private readonly string _apiServer = "https://8zb2oanzdl.azurewebsites.net/upload";
-    private readonly string _apiServer = "http://localhost:5000/upload";
+    private readonly string _apiServer = "https://8zb2oanzdl.azurewebsites.net/";
 
     public RecyclingController()
     {
 
     }
 
-    // GET: Recycling/Index
+    // GET: Recycling/
     public IActionResult Index()
     {
         return View();
     }
 
-    // POST: Recycling/Index
+    // GET: Recycling/Classify
+    public IActionResult Classify()
+    {
+        return View();
+    }
+
+    // GET: Recycling/Dictionary
+    public IActionResult Dictionary()
+    {
+        return View();
+    }
+
+    // POST: Recycling/Classify
     [HttpPost]
-    public async Task<IActionResult> Index(IFormFile imageFile)
+    public async Task<IActionResult> Classify(IFormFile imageFile)
     {
         if(imageFile.Length > 0)
         {
@@ -61,14 +71,14 @@ public class RecyclingController : Controller
             
             // Read the JSON data from the response
             var result = await response.Content.ReadAsStringAsync();
-            var values = JsonSerializer.Deserialize<Dictionary<string, string>>(result);
+            var values = JsonSerializer.Deserialize<Dictionary<string, double>>(result);
 
             // Pass the JSON data to the view
-            return View("Index", values);
+            return View("Classify", values);
         }
 
         // If no file was selected, return to the same page
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Classify));
     }
 
     private static bool IsImageTypeSupported(string contentType)
