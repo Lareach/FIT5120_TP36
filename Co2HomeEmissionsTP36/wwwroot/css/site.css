@@ -1001,3 +1001,9 @@ html {
   align-items: center;
   margin-top: 20px;
 }
+
+.sample-images-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}

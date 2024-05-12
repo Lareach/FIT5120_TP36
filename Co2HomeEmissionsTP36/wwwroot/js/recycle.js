@@ -2,6 +2,21 @@
     handleImageUploadForm();
 
     const mobileWidth = 1023;
+    const dictionary = 
+    {
+        '#battery': 1,
+        '#cardboard': 2,
+        '#clothes': 3,
+        '#glass': 4,
+        '#metal': 5,
+        '#Organic Waste': 6,
+        '#paper': 7,
+        '#plastic': 8,
+        '#shoes': 9,
+        '#styrofoam': 10,
+        '#trash': 11,
+        '#Wood': 12
+    }
 
     $.each($(".module-two-panel-selector-container"), function(i) {
         $(this).addClass("_" + (i + 1));
@@ -10,7 +25,7 @@
     let previousWidth = $(window).width();
     if(previousWidth > mobileWidth) {
         $(".right-panel").css("display", "none");
-        defaultSelected(1);
+        defaultSelected(dictionary[window.location.hash]);
     }
 
     updateTwoPanelContainer(previousWidth, mobileWidth);
