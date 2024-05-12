@@ -2,14 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Co2HomeEmissionsTP36.Controllers;
 
-public class PhotovoltaicController : Controller
+public class SolarController : Controller
 {
-    public PhotovoltaicController()
+    public SolarController()
     {
 
     }
 
-    // GET: Photovoltaic/Index
+    // GET: Solar/Index
     public IActionResult Index()
     {
         return View();

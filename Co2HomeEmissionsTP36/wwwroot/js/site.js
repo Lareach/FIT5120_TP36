@@ -377,5 +377,6 @@ function displayInsights(results) {
         $(".insights-left-total-value").text(total);
         $(".calculator-insights-container").show();
         $(".recommendations-container").show();
+        $(".action-container").show();
     });
 }

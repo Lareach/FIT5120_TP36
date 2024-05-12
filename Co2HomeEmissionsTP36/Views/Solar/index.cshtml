@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Photovoltaic";
+    ViewData["Title"] = "Solar";
 }
 
 <style>
@@ -26,6 +26,13 @@
 #search-input {
   height: 36px;
   margin-right: 8px;
+  width: 300px;
+}
+#photovoltaic {
+  padding: 60px;
+}
+#map {
+  margin-top: 30px;
 }
 </style>
 <script>
@@ -40,13 +47,93 @@
 </script>
 
 <div id="photovoltaic" class="questionnaire-form">
-    <h1>Photovoltaic</h1>
-    <h5>let's find the property that you are considering for solar.</h5>
-    <div id="search">
-        <input type="text" id="search-input" placeholder="Search postcode" />
-        <button class="btn btn-primary" id="search-button" disabled>Search</button>
+  <div class="solar-heading">
+    <h2 class="upload-header-heading">
+      Solar Energy
+    </h2>
+    <p class="solar-description">
+      Solar photovoltaics (PV) is a very modular technology that can be 
+      manufactured in large plants, which creates economies of scale, 
+      but can also be deployed in very small quantities at a time. This 
+      allows for a wide range of applications, from small residential 
+      roof-top systems up to utility-scale power generation installations.
+    </p>
+  </div>
+  <span class="solar-steps">Step 1</span>
+  <h4 class="solar-sub-headings">Let's find the property that you are considering for solar.</h4>
+  <div id="search">
+      <input type="text" id="search-input" placeholder="Search postcode" />
+      <button class="btn btn-primary" id="search-button" disabled>Search</button>
+  </div>
+  <div id="map" style="height: 700px;"></div>
+  <span class="solar-steps">Step 2</span>
+  <h4 class="solar-sub-headings">Helpful hints for your Solar PV system</h4>
+  <div class="solar-hints-container">
+    <div class="solar-hints">
+      <div class="solar-hints-item">
+        <span class="solar-hints-item-title">Monitoring Habits:</span>
+        <ul class="solar-hints-list">
+          <li class="solar-hints-list-item">Regularly check bills and inverter data to detect system glitches.</li>
+          <li class="solar-hints-list-item">Utilize solar monitoring tools to track system performance.</li>
+        </ul>
+      </div>
+      <div class="solar-hints-item">
+        <span class="solar-hints-item-title">Bill and Solar Inverter Checks:</span>
+        <ul class="solar-hints-list">
+          <li class="solar-hints-list-item">Ensure there is a feed-in tariff shown on the bill as 'solar generation'.</li>
+          <li class="solar-hints-list-item">Check the inverter for error messages; it should display the power being produced.</li>
+        </ul>
+      </div>
+      <div class="solar-hints-item">
+        <span class="solar-hints-item-title">Solar Monitoring Features:</span>
+        <ul class="solar-hints-list">
+          <li class="solar-hints-list-item">Modern inverters often have Wi-Fi or ethernet for remote monitoring.</li>
+          <li class="solar-hints-list-item">Monitoring services may provide apps for detailed statistics and performance alerts.</li>
+        </ul>
+      </div>
+      <div class="solar-hints-item">
+        <span class="solar-hints-item-title">Troubleshooting and Maintenance:</span>
+        <ul class="solar-hints-list">
+          <li class="solar-hints-list-item">Compare system performance with nearby similar systems using community data (e.g., pvoutput.org).</li>
+          <li class="solar-hints-list-item">Regular cleaning of solar panels to remove dust, grime, or bird droppings.</li>
+          <li class="solar-hints-list-item">Be aware of shading and overheating issues that can affect performance.</li>
+        </ul>
+      </div>
+      <div class="solar-hints-item">
+        <span class="solar-hints-item-title">Professional Maintenance and Inspections:</span>
+        <ul class="solar-hints-list">
+          <li class="solar-hints-list-item">Conduct site inspections and maintenance as recommended by the installer.</li>
+          <li class="solar-hints-list-item">Consider professional cleaning services and ensure inverters are not overheated.</li>
+        </ul>
+      </div>
+      <div class="solar-hints-item">
+        <span class="solar-hints-item-title">Purchase Considerations for Solar Panels:</span>
+        <ul class="solar-hints-list">
+          <li class="solar-hints-list-item">Understand different types of solar panel systems and factors influencing their efficiency.</li>
+          <li class="solar-hints-list-item">Regular professional check-ups are advised to maintain optimal performance.</li>
+        </ul>
+      </div>
     </div>
-    <div id="map" style="height: 700px;"></div>
+  </div>
+</div>
+
+<div class="action-container">
+    <br />
+    <h2 style="color: #4a6f70"><strong>Want to know about Energy-Efficient House Tour?</strong></h2>
+    <br />
+    <h4 style="margin:auto; text-align:center; max-width: 800px; font-size: 24px;">
+        It allows you to virtually explore ways that you can save energy and money 
+        throughout your home. Even small improvements can be meaningful for home 
+        energy savings. 
+    </h4>
+    <br />
+    <br />
+    <div style="display:flex; flex-direction:column; align-items:center;">
+        <a class="action-button btn btn-primary" href="/GovernmentSupport" draggable="false">
+            Start your tour now »
+        </a>
+    </div>
+    <br />
 </div>
 
 <script>
