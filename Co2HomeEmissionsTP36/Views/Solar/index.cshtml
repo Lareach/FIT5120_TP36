@@ -30,6 +30,7 @@
 }
 #photovoltaic {
   padding: 60px;
+  padding-top: 0;
 }
 #map {
   margin-top: 30px;
@@ -45,6 +46,12 @@
     language: "en",
   });
 </script>
+
+<div>
+    <div class="banner" style="height: 150px; margin-bottom: 5%;">
+        <div class="banner-content"> <p>Solar Energy</p> </div>
+    </div>
+</div>
 
 <div id="photovoltaic" class="questionnaire-form">
   <div class="solar-heading">
@@ -184,7 +191,7 @@ async function init(params) {
   const { Map, FeatureType } = await google.maps.importLibrary("maps");
   const { LatLng } = await google.maps.importLibrary("core");
   const geocoder = new google.maps.Geocoder();
-  const info = await jQuery.getJSON('./solar_postcodes_info.json')
+  const info = await jQuery.getJSON('/api/solar_postcodes_info.json')
   const infoSet = info.reduce((pre, cur) => {
     pre[cur.postcode] = cur;
     return pre
