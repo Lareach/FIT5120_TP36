@@ -73,6 +73,8 @@ public class RecyclingController : Controller
             var result = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<Dictionary<string, double>>(result);
 
+            ViewBag.ImageData = Convert.ToBase64String(imageData);
+
             // Pass the JSON data to the view
             return View("Classify", values);
         }
