@@ -372,9 +372,9 @@ function displayInsights(results) {
                 $(".firewood-insight.insights-left-item-container").show();
                 $(".insights-right.firewood-insight").show();
             }
-            total += results[i].emission;
+            total += parseFloat(results[i].emission);
         }
-        $(".insights-left-total-value").text(parseFloat(total));
+        $(".insights-left-total-value").text(total);
         $(".calculator-insights-container").show();
         $(".recommendations-container").show();
     });
