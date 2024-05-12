@@ -9,24 +9,24 @@ namespace Co2HomeEmissionsTP36.Controllers;
 public class QuestionnaireController : Controller
 {
     private readonly DataContext _context;
-    
+
     public QuestionnaireController(DataContext context)
     {
         _context = context;
     }
-    
+
     // GET: Questionnaire/Index
     public IActionResult Index()
     {
         return View();
     }
-    
+
     // POST: Questionnaire/Results
     [HttpPost]
-    public async Task<IActionResult> Results()
+    public IActionResult Results()
     {
         // Call API for new records and updates database
-        await RefreshSavingsData();
+        //await RefreshSavingsData();
 
         // Get form input
         var utilityBills = Request.Form["utilityBill"].ToList();
@@ -80,7 +80,7 @@ public class QuestionnaireController : Controller
         // Make an HTTP GET request to the web API
         return await new HttpClient().GetAsync(apiUrl);
     }
-    
+
     // Call API to find new records and update database
     private async Task RefreshSavingsData()
     {
