@@ -986,6 +986,7 @@ html {
 .solar-description {
   max-width: 800px;
   text-align: left;
+  font-size: 17px;
 }
 
 .solar-steps {
