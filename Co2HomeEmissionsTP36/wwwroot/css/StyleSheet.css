@@ -697,7 +697,7 @@ body a {
 }
 
 main {
-    min-height: 77vh;
+    min-height: 81vh;
 }
 
 @media only screen and (max-width: 576px) {
