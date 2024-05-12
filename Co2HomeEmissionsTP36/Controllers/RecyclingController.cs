@@ -52,23 +52,24 @@ public class RecyclingController : Controller
                 imageData = stream.ToArray();
             }
 
+            // Convert to base 64 string
             var data = new
             {
                 image = Convert.ToBase64String(imageData),
             };
-            
+
+            // Send image to Python server for prediction result
             var response = await new HttpClient().PostAsync(_apiServer, 
                 new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json"));
-
-            HttpStatusCode statusCode = response.StatusCode;
 
             // Check if the request was not successful
             if(!response.IsSuccessStatusCode)
             {
+                HttpStatusCode statusCode = response.StatusCode;
                 Console.WriteLine($"HTTP request failed with status code: {(int)statusCode} - {statusCode}");
                 return View("Error");
             }
-            
+
             // Read the JSON data from the response
             var result = await response.Content.ReadAsStringAsync();
             var values = JsonSerializer.Deserialize<Dictionary<string, double>>(result);
