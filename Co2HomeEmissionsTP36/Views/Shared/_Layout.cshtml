@@ -43,23 +43,33 @@
                      <li class="nav-item">
                          <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ClimateAction">Climate Action</a>
                      </li>
-                    <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="CarbonCalculator" asp-action="Index">Carbon Calculator</a>
+                     <li class="nav-item">
+                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="InteractiveHouse">Home Efficient Design</a>
                      </li>
                      <li class="nav-item">
                          <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GovernmentalSupport">Governmental Support</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Questionnaire" asp-action="Index">Grants</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="InteractiveHouse">Interactive House</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Photovoltaic" asp-action="Index">Photovoltaic</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Recycling" asp-action="Index">Recycling</a>
+                        <div class="nav-sub-menu-title">
+                            <span style="cursor: pointer;">Additional Tools</span>
+                            <div class="navbar-accordion-icon accordion-rotate"></div>
+                        </div>
+                        <div class="nav-sub-menu-container">
+                            <ul class="nav-sub-menu">
+                                <li class="nav-sub-menu-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Photovoltaic" asp-action="Index">Solar</a>
+                                </li>
+                                <li class="nav-sub-menu-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Recycling" asp-action="Index">Recycling</a>
+                                </li>
+                                <li class="nav-sub-menu-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="CarbonCalculator" asp-action="Index">Carbon Calculator</a>
+                                </li>
+                                <li class="nav-sub-menu-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Questionnaire" asp-action="Index">Grants</a>
+                                </li>
+                            </ul>
+                        </div>
                      </li>
                  </ul>
              </div>
@@ -119,6 +129,7 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="~/js/plot.js" asp-append-version="true"></script>
 <script src="~/js/recycle.js" asp-append-version="true"></script>
+<script src="~/js/navbar.js" asp-append-version="true"></script>
 
  @await RenderSectionAsync("Scripts", required: false)
  </body>
