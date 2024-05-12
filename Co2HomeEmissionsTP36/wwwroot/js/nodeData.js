@@ -1,4 +1,4 @@
-﻿var nodeData = {
+var nodeData = {
     "solarPanels": {
         title: "Solar Panels",
         description: "<p><strong>Money-Saving Tips:</strong></p>" +
@@ -56,6 +56,114 @@
     },
     "heatwaterPump": {
         title: "Heat Water Pump",
+        description: "<p><strong>Money-Saving Tips:</strong></p>" +
+            "<ul>" +
+            "<li>If you’re going to be away from your house for an extended period, switch the heat-pump water heater off at the switchboard to save energy.</li>" +
+            "<li>Every degree above 20 degrees can add 10% to your heating bill. In winter, heating can account for over 30% of your bill.</li>" +
+            "</ul>" +
+            "<p><strong>About:</strong></p>" +
+            "<p>Heat-pump water heaters extract heat from the surrounding air to heat water, using about 60-75% less electricity than conventional electric heaters.</p>" +
+            "<p>They function like reverse-cycle air conditioners, using electricity for the heat pump, not for directly heating water.</p>" +
+            "<p>Available as integrated units or split systems. They require proper ventilation and consideration for noise, especially near bedrooms.</p>" +
+            "<p>Suitable for off-peak electricity tariffs, these systems can also utilise timers to align with solar photovoltaic systems for efficient energy use.</p>" +
+            "<p>Eligible for government rebates in some regions, they are efficient in warmer climates but may have slower reheat rates in cold weather.</p>" +
+            "<p><strong>Governmental Support:</strong></p>" +
+            "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/heating-and-cooling' target='_blank'>Victorian Energy Upgrades for Households</a>"
+        ,
+        imageUrl: "https://example.com/image_heat_pump.jpg"
+    },
+    "windowcoverings": {
+        title: "Window Coverings",
+        description: "<p><strong>Money-Saving Tips:</strong></p>" +
+            "<ul>" +
+            "<li>If you’re going to be away from your house for an extended period, switch the heat-pump water heater off at the switchboard to save energy.</li>" +
+            "<li>Every degree above 20 degrees can add 10% to your heating bill. In winter, heating can account for over 30% of your bill.</li>" +
+            "</ul>" +
+            "<p><strong>About:</strong></p>" +
+            "<p>Heat-pump water heaters extract heat from the surrounding air to heat water, using about 60-75% less electricity than conventional electric heaters.</p>" +
+            "<p>They function like reverse-cycle air conditioners, using electricity for the heat pump, not for directly heating water.</p>" +
+            "<p>Available as integrated units or split systems. They require proper ventilation and consideration for noise, especially near bedrooms.</p>" +
+            "<p>Suitable for off-peak electricity tariffs, these systems can also utilise timers to align with solar photovoltaic systems for efficient energy use.</p>" +
+            "<p>Eligible for government rebates in some regions, they are efficient in warmer climates but may have slower reheat rates in cold weather.</p>" +
+            "<p><strong>Governmental Support:</strong></p>" +
+            "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/heating-and-cooling' target='_blank'>Victorian Energy Upgrades for Households</a>"
+        ,
+        imageUrl: "https://example.com/image_heat_pump.jpg"
+    },
+    "lightfixtures": {
+        title: "Light Fixtures",
+        description: "<p><strong>Money-Saving Tips:</strong></p>" +
+            "<ul>" +
+            "<li>If you’re going to be away from your house for an extended period, switch the heat-pump water heater off at the switchboard to save energy.</li>" +
+            "<li>Every degree above 20 degrees can add 10% to your heating bill. In winter, heating can account for over 30% of your bill.</li>" +
+            "</ul>" +
+            "<p><strong>About:</strong></p>" +
+            "<p>Heat-pump water heaters extract heat from the surrounding air to heat water, using about 60-75% less electricity than conventional electric heaters.</p>" +
+            "<p>They function like reverse-cycle air conditioners, using electricity for the heat pump, not for directly heating water.</p>" +
+            "<p>Available as integrated units or split systems. They require proper ventilation and consideration for noise, especially near bedrooms.</p>" +
+            "<p>Suitable for off-peak electricity tariffs, these systems can also utilise timers to align with solar photovoltaic systems for efficient energy use.</p>" +
+            "<p>Eligible for government rebates in some regions, they are efficient in warmer climates but may have slower reheat rates in cold weather.</p>" +
+            "<p><strong>Governmental Support:</strong></p>" +
+            "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/heating-and-cooling' target='_blank'>Victorian Energy Upgrades for Households</a>"
+        ,
+        imageUrl: "https://example.com/image_heat_pump.jpg"
+    },
+    "airleakage": {
+        title: "Door Sealing Air Leakage",
+        description: "<p><strong>Money-Saving Tips:</strong></p>" +
+            "<ul>" +
+            "<li>If you’re going to be away from your house for an extended period, switch the heat-pump water heater off at the switchboard to save energy.</li>" +
+            "<li>Every degree above 20 degrees can add 10% to your heating bill. In winter, heating can account for over 30% of your bill.</li>" +
+            "</ul>" +
+            "<p><strong>About:</strong></p>" +
+            "<p>Heat-pump water heaters extract heat from the surrounding air to heat water, using about 60-75% less electricity than conventional electric heaters.</p>" +
+            "<p>They function like reverse-cycle air conditioners, using electricity for the heat pump, not for directly heating water.</p>" +
+            "<p>Available as integrated units or split systems. They require proper ventilation and consideration for noise, especially near bedrooms.</p>" +
+            "<p>Suitable for off-peak electricity tariffs, these systems can also utilise timers to align with solar photovoltaic systems for efficient energy use.</p>" +
+            "<p>Eligible for government rebates in some regions, they are efficient in warmer climates but may have slower reheat rates in cold weather.</p>" +
+            "<p><strong>Governmental Support:</strong></p>" +
+            "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/heating-and-cooling' target='_blank'>Victorian Energy Upgrades for Households</a>"
+        ,
+        imageUrl: "https://example.com/image_heat_pump.jpg"
+    },
+    "thermostats": {
+        title: "Thermostats",
+        description: "<p><strong>Money-Saving Tips:</strong></p>" +
+            "<ul>" +
+            "<li>If you’re going to be away from your house for an extended period, switch the heat-pump water heater off at the switchboard to save energy.</li>" +
+            "<li>Every degree above 20 degrees can add 10% to your heating bill. In winter, heating can account for over 30% of your bill.</li>" +
+            "</ul>" +
+            "<p><strong>About:</strong></p>" +
+            "<p>Heat-pump water heaters extract heat from the surrounding air to heat water, using about 60-75% less electricity than conventional electric heaters.</p>" +
+            "<p>They function like reverse-cycle air conditioners, using electricity for the heat pump, not for directly heating water.</p>" +
+            "<p>Available as integrated units or split systems. They require proper ventilation and consideration for noise, especially near bedrooms.</p>" +
+            "<p>Suitable for off-peak electricity tariffs, these systems can also utilise timers to align with solar photovoltaic systems for efficient energy use.</p>" +
+            "<p>Eligible for government rebates in some regions, they are efficient in warmer climates but may have slower reheat rates in cold weather.</p>" +
+            "<p><strong>Governmental Support:</strong></p>" +
+            "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/heating-and-cooling' target='_blank'>Victorian Energy Upgrades for Households</a>"
+        ,
+        imageUrl: "https://example.com/image_heat_pump.jpg"
+    },
+    "kitchenappliances": {
+        title: "Kitchen Appliances",
+        description: "<p><strong>Money-Saving Tips:</strong></p>" +
+            "<ul>" +
+            "<li>If you’re going to be away from your house for an extended period, switch the heat-pump water heater off at the switchboard to save energy.</li>" +
+            "<li>Every degree above 20 degrees can add 10% to your heating bill. In winter, heating can account for over 30% of your bill.</li>" +
+            "</ul>" +
+            "<p><strong>About:</strong></p>" +
+            "<p>Heat-pump water heaters extract heat from the surrounding air to heat water, using about 60-75% less electricity than conventional electric heaters.</p>" +
+            "<p>They function like reverse-cycle air conditioners, using electricity for the heat pump, not for directly heating water.</p>" +
+            "<p>Available as integrated units or split systems. They require proper ventilation and consideration for noise, especially near bedrooms.</p>" +
+            "<p>Suitable for off-peak electricity tariffs, these systems can also utilise timers to align with solar photovoltaic systems for efficient energy use.</p>" +
+            "<p>Eligible for government rebates in some regions, they are efficient in warmer climates but may have slower reheat rates in cold weather.</p>" +
+            "<p><strong>Governmental Support:</strong></p>" +
+            "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/heating-and-cooling' target='_blank'>Victorian Energy Upgrades for Households</a>"
+        ,
+        imageUrl: "https://example.com/image_heat_pump.jpg"
+    },
+    "recyclablematerials": {
+        title: "Recyclable Materials",
         description: "<p><strong>Money-Saving Tips:</strong></p>" +
             "<ul>" +
             "<li>If you’re going to be away from your house for an extended period, switch the heat-pump water heater off at the switchboard to save energy.</li>" +
