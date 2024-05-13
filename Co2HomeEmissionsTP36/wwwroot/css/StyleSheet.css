@@ -139,76 +139,9 @@ body a:hover {
     padding-top: 0;
     padding-bottom: 0;
 }
-    .nav-link:hover, .nav-link.active {
-        color: #2e4e42 !important;
-        font-weight: bold !important;
-    }
-
-.nav-sub-menu-container {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    max-width: 200px;
-    min-width: 140px;
-    border-radius: 3px;
-}
-
-.nav-sub-menu {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    margin-top: 10px;
-}
-
-.nav-sub-menu-item {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: left;
-}
-
-.navbar-accordion-icon {
-    display: none;
-}
-
-@media screen and (min-width: 928px) {
-    .navbar-nav {
-        margin-left: 10px;
-    }
-}
-
-@media screen and (max-width: 575px) {
-    .nav-sub-menu-container {
-        margin: auto;
-        position: relative;
-    }
-
-    .nav-sub-menu {
-        align-items: center;
-    }
-
-    .nav-sub-menu-item {
-        padding: 0;
-    }
-
-    .nav-sub-menu-title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .navbar-accordion-icon {
-        display: block;
-        background-image: url("/images/arrow-up.svg");
-        background-repeat: no-repeat;
-        background-size: contain;
-        width: 16px;
-        min-width: 16px;
-        height: 12px;
-        margin-left: 12px;
-        margin-top: 3px;
-        transition: transform 0.3s linear;
-    }
+.nav-link:hover, .nav-link.active {
+    color: #2e4e42;
+    font-weight: bold;
 }
 
 .nav-sub-menu-container {
