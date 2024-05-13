@@ -39,7 +39,6 @@ function handleImageUploadForm() {
     $('#image-upload').on('change', function() {
         let fileName = $(this).val().split('\\').pop();
         $('#image-name-display').text('Selected Image: ' + fileName);
-        $('#image-upload-button').css("display", "block");
     });
 
     $('#image-uploader').on('submit', function(event) {
