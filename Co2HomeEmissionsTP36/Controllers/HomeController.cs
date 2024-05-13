@@ -41,6 +41,11 @@ namespace Co2HomeEmissionsTP36.Controllers
             return View();
         }
 
+        public IActionResult Reference()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

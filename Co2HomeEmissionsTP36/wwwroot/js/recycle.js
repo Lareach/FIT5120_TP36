@@ -1,4 +1,4 @@
-﻿jQuery(document).ready(function ($) {
+jQuery(document).ready(function ($) {
     handleImageUploadForm();
 
     const mobileWidth = 1023;

@@ -280,6 +280,9 @@ function initBabylonScene() {
                     }
                     highlightNode(groupName);
                     const data = nodeData[groupName];
+                    // Reset the scrollTop to start from the top of the detailsContainer
+                    document.getElementById("detailsContainer").scrollTop = 0;
+
                     document.getElementById("infoTitle").innerHTML = data.title;
                     document.getElementById("infoDescription").innerHTML = data.description;
                     selectedNode = pickedNode; // Update the selected node

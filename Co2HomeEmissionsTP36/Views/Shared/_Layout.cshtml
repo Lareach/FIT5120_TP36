@@ -38,16 +38,16 @@
              <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                  <ul class="navbar-nav">
                      <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                     </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["action"]?.ToString() == "ClimateAction" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="ClimateAction">Climate Action</a>
+                        </li>
+                     <li class="nav-item">
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["action"]?.ToString() == "InteractiveHouse" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="InteractiveHouse">Home Efficient Design</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ClimateAction">Climate Action</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="InteractiveHouse">Home Efficient Design</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="GovernmentalSupport">Governmental Support</a>
+                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["action"]?.ToString() == "GovernmentalSupport" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="GovernmentalSupport">Governmental Support</a>
                      </li>
                      <li class="nav-item">
                         <div class="nav-sub-menu-title">
@@ -56,21 +56,21 @@
                         </div>
                         <div class="nav-sub-menu-container">
                             <ul class="nav-sub-menu">
-                                <li class="nav-sub-menu-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Questionnaire" asp-action="Index">Grants</a>
-                                </li>
-                                <li class="nav-sub-menu-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Solar" asp-action="Index">Solar Energy</a>
-                                </li>
-                                <li class="nav-sub-menu-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Recycling" asp-action="Index">Recycling</a>
-                                </li>
-                                <li class="nav-sub-menu-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Recycling" asp-action="Dictionary">Recycling Dictionary</a>
-                                </li>
-                                <li class="nav-sub-menu-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="CarbonCalculator" asp-action="Index">Carbon Calculator</a>
-                                </li>
+                                 <li class="nav-sub-menu-item">
+                                     <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString() == "Questionnaire" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" asp-area="" asp-controller="Questionnaire" asp-action="Index">Grants</a>
+                                 </li>
+                                 <li class="nav-sub-menu-item">
+                                     <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString() == "Solar" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" asp-area="" asp-controller="Solar" asp-action="Index">Solar Energy</a>
+                                 </li>
+                                 <li class="nav-sub-menu-item">
+                                     <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString() == "Recycling" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" asp-area="" asp-controller="Recycling" asp-action="Index">Recycling</a>
+                                 </li>
+                                 <li class="nav-sub-menu-item">
+                                     <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString() == "Recycling" && ViewContext.RouteData.Values["action"]?.ToString() == "Dictionary" ? "active" : "")" asp-area="" asp-controller="Recycling" asp-action="Dictionary">Recycling Dictionary</a>
+                                 </li>
+                                 <li class="nav-sub-menu-item">
+                                     <a class="nav-link text-dark @(ViewContext.RouteData.Values["controller"]?.ToString() == "CarbonCalculator" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" asp-area="" asp-controller="CarbonCalculator" asp-action="Index">Carbon Calculator</a>
+                                 </li>
                             </ul>
                         </div>
                      </li>
@@ -92,29 +92,49 @@
         <div class="home-container" style="background: #2e4e42; border-top: 4px solid cadetblue">
             <div class="container" style="background: #2e4e42;">
                 <div class="row gy-4" style="justify-content:space-between; margin-top: 2%; padding-right: 0; --bs-gutter-x: 0">
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" style="align-content: center;">
                         <h2 class="h5 lined mb-4"><strong>About</strong></h2>
                         <p class="text-muted text-sm" style="color: white !important">
-                            This project aims to help users understand and manage their carbon emissions from homes.
-                            It's a part of a collaborative effort sponsored by Environment Victoria and the Department of Education Victoria.
+                            Helping Victorian home owners find how the government will help them reduce their Co2 footprint, 
+                            learn how to save energy, produce green energy and educating their families about 
+                            green practises.
                         </p>
                     </div>
-                    <div class="col-lg-5">
+
+                    <div class="col-lg-2">
                         <h2 class="h5 lined mb-4"><strong>Quick Links</strong></h2>
                         <div class="d-flex">
                             <ul class="list-unstyled d-inline-block me-4 mb-0">
                                 <li class="mb-2"><a href="~/Home/ClimateAction" style="color: white;">Climate Action</a></li>
-                                <li class="mb-2"><a href="~/CarbonCalculator/Index" style="color: white;">Carbon Calculator</a></li>
+                                <li class="mb-2"><a href="~/Home/InteractiveHouse" style="color: white;">Home Efficient Design</a></li>
                                 <li class="mb-2"><a href="~/Home/GovernmentalSupport" style="color: white;">Governmental Support</a></li>
                             </ul>
-                            <ul class="list-unstyled d-inline-block mb-0">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <h2 class="h5 lined mb-4"><strong>Additional Tools</strong></h2>
+                        <div class="d-flex">
+                            <ul class="list-unstyled d-inline-block me-4 mb-0">
                                 <li class="mb-2"><a href="~/Questionnaire/Index" style="color: white;">Grants</a></li>
-                                <li class="mb-2"><a href="~/Home/InteractiveHouse" style="color: white;">Interactive House</a></li>
+                                <li class="mb-2"><a href="~/Solar/Index" style="color: white;">Solar Energy</a></li>
+                                <li class="mb-2"><a href="~/CarbonCalculator/Index" style="color: white;">Carbon Calculator</a></li>
+                            </ul>
+                            <ul class="list-unstyled d-inline-block mb-0">
+                                <li class="mb-2"><a href="~/Recycling/Index" style="color: white;">Recycling</a></li>
+                                <li class="mb-2"><a href="~/Recycling/Dictionary" style="color: white;">Recycling Dictionary</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="col-lg-2">
+                        <h2 class="h5 lined mb-4"><strong>References</strong></h2>
+                        <div class="d-flex">
+                            <ul class="list-unstyled d-inline-block me-4 mb-0">
+                                <li class="mb-2"><a href="~/Home/Reference" style="color: white;">Images</a></li>
+                                <li class="mb-2"><a href="~/Home/Reference" style="color: white;">3d Models Used</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
