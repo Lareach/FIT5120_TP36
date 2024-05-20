@@ -63,16 +63,16 @@ function initBabylonScene() {
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
     var nodeGroups = {
-        "solarPanels": ["node41", "node108"],
-        "outdoorlighting": ["node56", "node125"],
-        "evcharger": ["node46", "node111"],
-        "heatwaterPump": ["node51", "node2"],
-        "windowcoverings": ["node81", "node67"],
-        "lightfixtures": ["node71", "node128"],
-        "airleakage": ["node91", "node141"],
-        "thermostats": ["node76", "node61"],
-        "kitchenappliances": ["node86", "node105", "node135", "node143", "node150"],
-        "recyclablematerials": ["node100", "node96"]
+        "solarPanels": ["node41", "node102"],
+        "outdoorlighting": ["node53", "node119"],
+        "evcharger": ["node45", "node105"],
+        "heatwaterPump": ["node49", "node2"],
+        "windowcoverings": ["node75", "node63"],
+        "lightfixtures": ["node67", "node122"],
+        "airleakage": ["node83", "node135"],
+        "thermostats": ["node71", "node57"],
+        "kitchenappliances": ["node79", "node95", "node144", "node129"],
+        "recyclablematerials": ["node91", "node87"]
     };
 
     var selectedNode = null; // Track the currently selected node
@@ -213,6 +213,16 @@ function initBabylonScene() {
         }
         return null; // Return null if no group is found
     }
+
+    function applyInitialHighlight(node) {
+        node.getChildMeshes().forEach(mesh => {
+            if (!originalMaterials.has(mesh)) {
+                originalMaterials.set(mesh, mesh.material); // Store original material
+            }
+            mesh.material = mesh.material.clone("clonedMaterial_" + mesh.name);
+            mesh.material.emissiveColor = new BABYLON.Color3(0, 1, 0.333); // Always highlighted color
+        });
+    }
   
     function highlightNode(groupName) {
         var nodes = nodeGroups[groupName];
@@ -225,7 +235,7 @@ function initBabylonScene() {
                         mesh.material = mesh.material.clone("clonedMaterial_" + mesh.name);
 
                         // Check if the node is one of the specified nodes and change color to orange
-                        if (["node41", "node56", "node46", "node51", "node81", "node71", "node91", "node76", "node86", "node100"].includes(nodeName)) {
+                        if (["node41", "node53", "node45", "node49", "node75", "node67", "node83", "node71", "node79", "node91"].includes(nodeName)) {
                             mesh.material.emissiveColor = new BABYLON.Color3(1, 1, 1); // Red
                         } else {
                             mesh.material.emissiveColor = new BABYLON.Color3(1, 0.5, 0); // Default color, adjust as necessary
@@ -309,7 +319,9 @@ function initBabylonScene() {
         }
     });
 
-    BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse22.glb", scene, function (newMeshes, particleSystems, skeletons) {
+    var alwaysHighlightedNodes = ["node41", "node53", "node45", "node49", "node75", "node67", "node83", "node71", "node79", "node91"];
+
+    BABYLON.SceneLoader.ImportMesh("", "https://lareach.github.io/publicfiles/", "thehouse23.glb", scene, function (newMeshes, particleSystems, skeletons) {
         if (newMeshes.length > 0) {
             scene.activeCamera.target = newMeshes[0];
             newMeshes.forEach(mesh => {
@@ -317,16 +329,15 @@ function initBabylonScene() {
                     let transformNode = new BABYLON.TransformNode("Node_" + mesh.name, scene);
                     mesh.parent = transformNode;
                 }
+                // Apply initial highlighting to specified nodes
+                if (alwaysHighlightedNodes.includes(mesh.parent.name)) {
+                    applyInitialHighlight(mesh.parent);
+                }
             });
         } else {
             console.error('No meshes were loaded. Check if the file path is correct and the model file is not corrupt.');
         }
-
-        // Model is loaded, wait for an additional 4 seconds before hiding the loading screen
-        setTimeout(function () {
-            // Hide the loading screen when the scene is fully loaded and the additional time has passed
-            loadingScreenDiv.style.display = "none";
-        }, 2000); // 2000 milliseconds delay
+        setTimeout(function () { loadingScreenDiv.style.display = "none"; }, 4000);
     });
 
     engine.runRenderLoop(function () {
