@@ -117,7 +117,7 @@ var nodeData = {
         "imageUrl": "https://example.com/image_energystarlight.jpg"
     },
     "airleakage": {
-        "title": "Doors-Air Leakage" + "</br>" + "</br>",
+        "title": "Doors-Air Leakage Sealing" + "</br>" + "</br>",
         "description":
             "<p><strong>Governmental Support:</strong></p>" +
             "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/weather-sealing' target='_blank'>Victorian Energy Upgrades: Weather Sealing</a>" + "</br>" + "</br>" +
@@ -134,7 +134,7 @@ var nodeData = {
         "imageUrl": "https://example.com/image_doorsairleakage.jpg"
     },
     "thermostats": {
-        "title": "Thermostat" + "</br>" + "</br>",
+        "title": "Thermostats" + "</br>" + "</br>",
         "description":
             "<p><strong>Info:</strong></p>" +
             "<a href='https://www.sustainability.vic.gov.au/energy-efficiency-and-reducing-emissions/save-energy-in-the-home/heat-your-home-efficiently' target='_blank'>Heat Your Home Efficiently</a>" + "</br>" + "</br>" +
@@ -148,7 +148,7 @@ var nodeData = {
         "imageUrl": "https://example.com/image_thermostat.jpg"
     },
     "kitchenappliances": {
-        "title": "Kitchen Application" + "</br>" + "</br>",
+        "title": "Kitchen Appliances" + "</br>" + "</br>",
         "description":
             "<p><strong>Governmental Support:</strong></p>" +
             "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/induction-cooktops' target='_blank'>Victorian Energy Upgrades: Induction Cooktops</a>" + "</br>" + "</br>" +
