@@ -80,18 +80,25 @@ var nodeData = {
         imageUrl: "https://example.com/image_heat_pump.jpg"
     },
     "windowcoverings": {
-        "title": "Window Coverings" + "</br>" + "</br>",
+        "title": "Windows Coverings" + "</br>" + "</br>",
         "description":
-            "<p><strong>Governmental Support:</strong></p>" +
-            "<a href='https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/window-glazing' target='_blank'>Victorian Energy Upgrades: Window Glazing</a>" + "</br>" + "</br>" +
-            "<p><strong>Money-Saving Tips:</strong></p>" +
+            "<p><strong>Info:</strong></p>" +
+            "<a href='https://www.sustainability.vic.gov.au/energy-efficiency-and-reducing-emissions/building-or-renovating/windows-and-shading' target='_blank'>Home windows and shading for energy efficiency</a>" + "</br>" + "</br>" +
+            "<p><strong>Money-saving Tips:</strong></p>" +
             "<ul>" +
-            "<li>Double-glazed windows are very energy efficient. They help reduce heat loss or heat gain by almost 30% compared to single-glazed windows.</li>" +
-            "</ul>" + "</br>" + "</br>" +
-            "<p><strong>About:</strong></p>" +
-            "<p>Double-glazed windows are highly energy efficient because they significantly reduce heat transfer between the interior of a building and the external environment. This is achieved by trapping air or inert gas between two panes of glass, creating an insulating barrier. This barrier helps to keep warm air inside during colder months and prevents hot air from entering during warmer months. As a result, these windows can reduce heat loss or gain by about 30% compared to single-glazed windows, leading to more stable indoor temperatures and lower energy costs for heating and cooling. This efficiency makes double-glazing a popular choice for enhancing a building's energy performance.</p>"
+            "<li>Choose window coverings based on the climate, window orientation (east, west, north-facing), and how frequently the coverings will be used for optimal energy savings.</li>" +
+            "<li>Opt for window coverings such as blinds, shades, curtains, or shutters to lower your energy bills and enhance your home’s style.</li>" +
+            "<li>Honeycomb or cellular blinds are highly energy efficient, trapping air and mimicking the effect of double-glazed windows.</li>" +
+            "<li>Blinds can reflect heat back out in summer and trap still air to prevent heat loss in winter.</li>" +
+            "<li>Heavy fabrics and insulating materials are effective at blanketing windows.</li>" +
+            "<li>Curtains should reach the floor and be weighted to minimize air movement; using a pelmet can further prevent heat transfer.</li>" +
+            "<li>Combine curtains with blinds for extra insulation.</li>" +
+            "<li>Solar blinds block UV rays, protecting furniture and reducing energy costs while allowing light to filter in during the day.</li>" +
+            "<li>Shutters provide excellent insulation by trapping still air between the shutter and the window.</li>" +
+            "<li>Custom-made shutters fit perfectly within the window frame, enhancing their energy efficiency.</li>" +
+            "</ul>"
         ,
-        "imageUrl": "https://example.com/image_windowcoverings.jpg"
+        "imageUrl": "https://example.com/image_windows_covering.jpg"
     },
     "lightfixtures": {
         "title": "Energy Star Light Fixtures" + "</br>" + "</br>",

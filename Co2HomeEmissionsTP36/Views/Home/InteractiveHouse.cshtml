@@ -180,18 +180,26 @@
                         <div class="questionnaire-accordion-tail accordion-close" style="overflow-y: auto;">
                             <div class="questionnaire-accordion-tail-content" style="max-height: 300px">
                                 <p class="questionnaire-accordion-head-text-description">
-                                    <strong>Governmental Support:</strong><br>
-                                    <a href="https://www.energy.vic.gov.au/households/victorian-energy-upgrades-for-households/window-glazing" target="_blank">Victorian Energy Upgrades: Window Glazing</a><br><br>
+                                    <strong>Info:</strong><br>
+                                    <a href="https://www.sustainability.vic.gov.au/energy-efficiency-and-reducing-emissions/building-or-renovating/windows-and-shading" target="_blank">Home windows and shading for energy efficiency</a><br><br>
                                     <strong>Money-Saving Tips:</strong>
                                     <ul>
-                                        <li>Double-glazed windows are very energy efficient. They help reduce heat loss or heat gain by almost 30% compared to single-glazed windows.</li>
-                                    </ul><br>
-                                    <strong>About:</strong>
-                                <p>Double-glazed windows are highly energy efficient because they significantly reduce heat transfer between the interior of a building and the external environment. This is achieved by trapping air or inert gas between two panes of glass, creating an insulating barrier. This barrier helps to keep warm air inside during colder months and prevents hot air from entering during warmer months. As a result, these windows can reduce heat loss or gain by about 30% compared to single-glazed windows, leading to more stable indoor temperatures and lower energy costs for heating and cooling. This efficiency makes double-glazing a popular choice for enhancing a building's energy performance.</p>
+                                        <li>Choose window coverings based on the climate, window orientation (east, west, north-facing), and how frequently the coverings will be used for optimal energy savings.</li>
+                                        <li>Opt for window coverings such as blinds, shades, curtains, or shutters to lower your energy bills and enhance your home’s style.</li>
+                                        <li>Honeycomb or cellular blinds are highly energy efficient, trapping air and mimicking the effect of double-glazed windows.</li>
+                                        <li>Blinds can reflect heat back out in summer and trap still air to prevent heat loss in winter.</li>
+                                        <li>Heavy fabrics and insulating materials are effective at blanketing windows.</li>
+                                        <li>Curtains should reach the floor and be weighted to minimize air movement; using a pelmet can further prevent heat transfer.</li>
+                                        <li>Combine curtains with blinds for extra insulation.</li>
+                                        <li>Solar blinds block UV rays, protecting furniture and reducing energy costs while allowing light to filter in during the day.</li>
+                                        <li>Shutters provide excellent insulation by trapping still air between the shutter and the window.</li>
+                                        <li>Custom-made shutters fit perfectly within the window frame, enhancing their energy efficiency.</li>
+                                    </ul>
                                 </p>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Energy Star Light Fixtures Section -->
                     <div class="accordion-container">
@@ -359,7 +367,7 @@
                     <div id="loadingScreen">
                         <button id="enterTourButton">Enter Tour</button>
                     </div>
-                    <div id="modelLoadingScreen">Loading the model, please wait...</div>
+                    <div id="modelLoadingScreen">Loading 3d House, please wait...</div>
                     <canvas id="renderCanvas" touch-action="none" style="width: 100%; height: 100%;"></canvas>
                 </div>
             </div>
@@ -369,14 +377,17 @@
                     <img id="infoImage" src="" alt="Node Image" style="width: 100%; display: none;">
                     <ul id="infoDescription">
                         <h3 id="infoTitle" style="color: #00826a">Welcome!</h3>
-                        <li> Press "Enter Tour" to begin</li>
-                        <li> Please note it may take a while to load the model your first time</li>
+                        <li style="font-size: 15.5px"> Press "Enter Tour" to begin</li>
+                        <li style="font-size: 15.5px"> Please note it may take a while to load the model during your first time.</li>
+                        <li style="font-size: 15.5px"> If you encounter any problems, please seek the "Troubleshoot" section below.</li>
+                        <li style="font-size: 15.5px"> It is recommended to close other high CPU running programs in the background.</li>
                         <br />
                         <h3 id="infoTitle" style="color: #00826a">To Navigate</h3>
-                        <li> Left click within the model and drag to navigate around.</li>
-                        <li> Click on Energy Saving Components to get more information.</li>
-                        <li> Use 2 fingers to pinch inwards/outwards to zoom in/out.</li>
-                        <li> When lost, press Internal View or the External View Button</li>
+                        <p style="font-size: 15.5px"> Once the model is loaded: </p>
+                        <li style="font-size: 15.5px"> Left click within the model and drag to navigate around.</li>
+                        <li style="font-size: 15.5px"> Click on the bright green information sign to get more information about the assigned energy efficient component.</li>
+                        <li style="font-size: 15.5px"> Use 2 fingers to pinch inwards/outwards to zoom in/out.</li>
+                        <li style="font-size: 15.5px"> When lost, press Internal View or the External View Button</li>
                     </ul>
                 </div>
             </div>
@@ -390,6 +401,27 @@
                 <div class="questionnaire-accordion-head">
                     <div class="questionnaire-accordion-head-content">
                         <div class="questionnaire-accordion-head-text">
+                            <h4>Why is the model lagging?</h4>
+                        </div>
+                        <div class="questionnaire-accordion-head-icon accordion-rotate"></div>
+                    </div>
+                </div>
+                <div class="questionnaire-accordion-tail accordion-close">
+                    <div class="questionnaire-accordion-tail-content">
+                        <p class="questionnaire-accordion-head-text-description">
+                            <li> Close other running programs and processes in the background. Escpecially high CPU usage applications like Zoom, Games or any other high CPU usage programs.
+                            <li> If it is still lagging, try reducing the web page size using (Ctrl and -) or (Command and -) on Mac and then refresh the page.
+                            <li> If it is still lagging, you can try leaving the model loaded for 4 to 5 minutes and then come back to it.
+                            <li> If it is still lagging, the only option is try using a different device with higher processor and higher RAM.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-container">
+                <div class="questionnaire-accordion-head">
+                    <div class="questionnaire-accordion-head-content">
+                        <div class="questionnaire-accordion-head-text">
                             <h4>Why am I am stuck at the loading screen?</h4>
                         </div>
                         <div class="questionnaire-accordion-head-icon accordion-rotate"></div>
@@ -398,7 +430,9 @@
                 <div class="questionnaire-accordion-tail accordion-close">
                     <div class="questionnaire-accordion-tail-content">
                         <p class="questionnaire-accordion-head-text-description">
-                            Refresh the model by clicking on the Interactive House Tab in the navigation bar again.
+                            <li> Please try to wait for a max of 20 seconds or 1 minute if your device is currently slow.If it still not loading:
+                            <li> Clear your browser cache and reload the model again.
+                            <li> Refresh the model by clicking on the Home Efficient Design Tab in the navigation bar again or simply refresh the page.
                         </p>
                     </div>
                 </div>
@@ -416,7 +450,7 @@
                 <div class="questionnaire-accordion-tail accordion-close">
                     <div class="questionnaire-accordion-tail-content">
                         <p class="questionnaire-accordion-head-text-description">
-                            Refresh the model by clicking on the Interactive House Tab in the navigation bar again.
+                            Refresh the model by clicking on the Home Efficient Design Tab in the navigation bar again or simply refresh the page.
                         </p>
                     </div>
                 </div>
@@ -435,7 +469,8 @@
                     <div class="questionnaire-accordion-tail-content">
                         <p class="questionnaire-accordion-head-text-description">
                             <li> Make sure you are using a laptop or a computer.
-                            <li> Refresh the model by clicking on the Interactive House Tab in the navigation bar again.
+                            <li> Close other running programs and processes in the background such as Zoom, Opened Games or any high CPU usage programs.
+                            <li> Refresh the model by clicking on the Home Efficient Design Tab in the navigation bar again or simply refresh the page.
                             <li> It may load for a long time, when you are first opening this model.
                             <li> Clear your browser cache and reload the model again.
                         </p>
